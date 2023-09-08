@@ -13,7 +13,7 @@ def Push_to_Niid():
 
 
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
     # options.add_argument("--start-maximized")
     options.add_argument('--log-level=3')
 
