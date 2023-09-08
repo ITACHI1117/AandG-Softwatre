@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
+
 from selenium.webdriver.common.by import By
 
 
@@ -60,8 +61,30 @@ def Push_to_Niid():
 
 
     #Uploading the file
+    time.sleep(0.8)
+    driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[7]/td[2]/div/ul/li/span/input[3]").send_keys("C:/Users/ICT001/Downloads/NIID Spool.xlsx")
     time.sleep(5)
-    driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[7]/td[2]/div/ul/li/span/input[3]").send_keys("C:/Users/ICT001/PycharmProjects/A&G Software/NIID Spool.xlsx")
-    time.sleep(5)
+
+    #Upload button
+    driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[9]/TD[2]/span/input").click()
+    cssValue = driver.find_element(
+        by="xpath", value='//div[@id="MainContent_UpdateProgress1"]').value_of_css_property('display')
+    print(cssValue)
+
+    while cssValue == 'block':
+        cssValue = driver.find_element(
+            by="xpath", value='//div[@id="MainContent_UpdateProgress1"]').value_of_css_property('display')
+        print(cssValue)
+        print('Loading...')
+        time.sleep(5)
+        if cssValue == 'none':
+            print("Done Loading✅")
+
+    errmessage = driver.find_element(by="xpath", value='//span[@id="MainContent_lblErrorMessage"]')
+    time.sleep(2)
+    return errmessage.text
+
+
+
 
 

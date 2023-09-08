@@ -1,34 +1,24 @@
-# import pandas as pd
-# import numpy as np
-# import glob
-#
-# files = glob.glob('*.xlsx')
-#
-# excel_file_path ="Chassis Cover.xlsx"
-#
-#
-# for f in files:
-#     sales = pd.read_excel('NIID Spool.xlsx')
-#
-#     print(sales)
-#     df = pd.DataFrame(sales)
-#     df.to_excel(excel_file_path, index=False)
-# #
-# #     def_list.append(csv)
-# #
-# # sales = pd.concat(def_list)
-#
-# # print(sales)
-import os
-import time
+from pathlib import Path
+import openpyxl
 
-directory_path = "C:/Users/ICT001/PycharmProjects/A&G Software"
-file_name = "NIID Spool.xlsx"
+def change_sheet_name():
+    downloads_path = Path.home() / "Downloads"
+    # Load the Excel workbook
+    file_path = f"{downloads_path}/NIID Spool.xlsx"  # Replace with the path to your Excel file
+    workbook = openpyxl.load_workbook(file_path)
 
-file_path = os.path.join(directory_path, file_name)
+    # Get the sheet whose name you want to change
+    old_sheet_name = "3rdParty"  # Replace with the current sheet name
+    sheet = workbook[old_sheet_name]
 
-while not os.path.isfile(file_path):
-    time.sleep(2)
-    print(f"The file '{file_name}' exists in the directory '{directory_path}'.")
-else:
-    print(f"The file '{file_name}'  exist in the directory '{directory_path}'.")
+    # Set the new sheet name
+    new_sheet_name = "Sheet1"  # Replace with the desired new sheet name
+    sheet.title = new_sheet_name
+
+    # Save the workbook with the updated sheet name
+    workbook.save(file_path)
+
+    # Close the workbook
+    workbook.close()
+
+

@@ -3,13 +3,18 @@ from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
 import os
+from pathlib import Path
+
+from test import change_sheet_name
+
 
 # Main Function
 
 
 def get_niid_spool(start_date,end_date):
 
-    directory_path = "C:/Users/ICT001/PycharmProjects/A&G Software"
+    downloads_path = Path.home() / "Downloads"
+    directory_path = downloads_path
     file_name = "NIID Spool.xlsx"
     file_path = os.path.join(directory_path, file_name)
     # Provide the email and password
@@ -21,8 +26,8 @@ def get_niid_spool(start_date,end_date):
 
     options = webdriver.ChromeOptions()
     # options.add_argument("download.default_directory=C:/Downloads")
-    prefs = {'download.default_directory': 'C:\\Users\\ICT001\\PycharmProjects\\A&G Software'}
-    options.add_experimental_option('prefs', prefs)
+    # prefs = {'download.default_directory': 'C:\\Users\\ICT001\\PycharmProjects\\A&G Software'}
+    # options.add_experimental_option('prefs', prefs)
     # options.add_argument("--headless=new")
     # options.add_argument("--start-maximized")
     options.add_argument('--log-level=3')
@@ -94,9 +99,18 @@ def get_niid_spool(start_date,end_date):
         value='//div[@class="row"][4]/input').click()
     time.sleep(2)
 
-    while not os.path.isfile(file_path):
+    try:
+      while not os.path.isfile(file_path):
         time.sleep(5)
         print(f"The file '{file_name}' does not exists in the directory '{directory_path}'.")
+    except Exception as e:
+        print(e)
+
+
+    time.sleep(5)
+
+    time.sleep(5)
+
 
 
 
