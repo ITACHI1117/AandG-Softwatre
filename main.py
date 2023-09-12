@@ -12,6 +12,7 @@ from pathlib import Path
 
 from Format_date import format_date
 from  Comparing_Date import comparing_date
+from push_date import run
 from test import change_sheet_name
 
 LightTheme = ["pulse","default","default","white"]
@@ -22,15 +23,21 @@ root = tb.Window(themename=Theme[0])
 # root = Tk()
 root.title("A&G Policy Updater")
 root.iconbitmap("./A&GICON.ico")
-root.geometry('600x400')
+root.geometry('600x500')
 
 
 # Done = ""
 
 def run_program():
+
+    def run_program_auto():
+        run()
+
+
     def update():
         # my_progress.start()
         error_message.config(text="Working on it👩‍💻", bootstyle="success")
+        Reg_update_button.config(state="disabled")
         downloads_path = Path.home() / "Downloads"
         file_path = f"{downloads_path}/NIID Spool.xlsx"
 
@@ -45,7 +52,7 @@ def run_program():
         #Getting error message if the date format is wrong
         ErrorMessage = comparing_date(edited_start_date,edited_end_date)
         if ErrorMessage == "From Date cannot be greater than To Date.":
-            error_message.config(text=ErrorMessage)
+            error_message.config(text=ErrorMessage, bootstyle="danger")
             time.sleep(3)
             error_message.config(text="")
         else:
@@ -95,6 +102,7 @@ def run_program():
                 print(f"File '{file_path}' not found.")
             except Exception as e:
                 print(f"An error occurred: {e}")
+            Reg_update_button.config(state="enabled")
 
 
 
@@ -119,8 +127,11 @@ def run_program():
     end_date = tb.DateEntry(my_frame, bootstyle="dark",)
     end_date.pack(pady=5)
 
-    Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Spool", width=30, command=run_function_in_background)
+    Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Push", width=30, command=run_function_in_background)
     Reg_update_button.pack( padx=0, pady=10, )
+
+    auto_push = tb.Button(my_frame, bootstyle="danger", text="Push Automatically", width=30, command=run_program_auto)
+    auto_push.pack(padx=0, pady=10, )
 
     # if Done == "":
     #     my_progress = tb.Progressbar(root, bootstyle="success", maximum=100, mode="determinate", length=300, value=0)

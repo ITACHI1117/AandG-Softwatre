@@ -28,8 +28,8 @@ def get_niid_spool(start_date,end_date):
     # options.add_argument("download.default_directory=C:/Downloads")
     # prefs = {'download.default_directory': 'C:\\Users\\ICT001\\PycharmProjects\\A&G Software'}
     # options.add_experimental_option('prefs', prefs)
-    options.add_argument("--headless=new")
-    # options.add_argument("--start-maximized")
+    # options.add_argument("--headless=new")
+    # # options.add_argument("--start-maximized")
     options.add_argument('--log-level=3')
 
     # Provide the path of chromedriver present on your system.
