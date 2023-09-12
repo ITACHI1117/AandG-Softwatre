@@ -78,8 +78,8 @@ print(current_Month)
 
 
 
-Start_Date = [30,1,2023]
-End_Date = [35,1,2023]
+Start_Date = [20,2,2023]
+End_Date = [25,2,2023]
 print(Start_Date[1])
 print(current_Month)
 
@@ -137,14 +137,13 @@ def date_formater(S_date,E_date):
 
     if S_date[1] == "Apr" or S_date[1] == "Jun" or S_date[1] == "Sep" or S_date[1] == "Nov":
         E_date[0] = 30
+    elif S_date[1] == 2 or int(current_Year) %4 !=0 or E_date[0] > 28:
+        E_date[0] = 28
+    elif S_date[1] == 2 or int(current_Year) == 0 or E_date[0] > 29:
+        E_date[0] = 29
     else:
         E_date[0] = 31
 
-
-    if S_date[1] == 2 and int(current_Year) %4 !=0 and E_date[0] > 28:
-        E_date[0] = 28
-    if S_date[1] == 2 and int(current_Year) == 0 and E_date[0] > 29:
-        E_date[0] = 29
 
 
     Formted_Sdate = "-".join(map(str,S_date))
