@@ -12,8 +12,9 @@ from pathlib import Path
 
 from Format_date import format_date
 from  Comparing_Date import comparing_date
+from Write_logs import write_logs
 from push_date import run
-from test import change_sheet_name
+from Change_Sheet_Name import change_sheet_name
 
 LightTheme = ["pulse","default","default","white"]
 DarkTheme = ["cyborg","dark","default","black"]
@@ -30,8 +31,27 @@ root.geometry('600x500')
 
 def run_program():
 
-    def run_program_auto():
-        run()
+    def run_auto_update():
+        error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
+        Reg_update_button.config(state="disabled")
+        auto_push.config(state="disabled")
+        try:
+            error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
+            Pushing_dates = run()
+            for Pushing_date in Pushing_dates:
+                error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
+                print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
+                write_logs(Pushing_date[0],Pushing_date[1],Pushing_date[2])
+            error_message.config(text=f"Done✅", bootstyle="success")
+            Reg_update_button.config(state="enabled")
+            auto_push.config(state="enabled")
+        except Exception as e:
+            print(e)
+            error_message.config(text=f"There was an error", bootstyle="danger")
+            Reg_update_button.config(state="enabled")
+            auto_push.config(state="enabled")
+            error_message.config(text=f"", bootstyle="danger")
+
 
 
     def update():
@@ -109,6 +129,13 @@ def run_program():
     def run_function_in_background():
         # Create a thread to run the long_running_function
         thread = threading.Thread(target=update)
+        thread.start()
+        # thread1 = threading.Thread(target=loading)
+        # thread1.start()
+
+    def run_program_auto():
+        # Create a thread to run the long_running_function
+        thread = threading.Thread(target=run_auto_update)
         thread.start()
         # thread1 = threading.Thread(target=loading)
         # thread1.start()

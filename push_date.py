@@ -2,10 +2,11 @@ import datetime
 import os
 import time
 
+from Delete_file_when_done import delete
 from Error_messges import openNewWindow
 from Get_Niid_Spool import get_niid_spool
 from Push_to_Niid import Push_to_Niid
-from test import change_sheet_name
+from Change_Sheet_Name import change_sheet_name
 
 
 from pathlib import Path
@@ -16,10 +17,12 @@ date_to_string = [str(current_date).split("-")]
 
 current_Year = date_to_string[0][0]
 current_Month = int(date_to_string[0][1])
+current_Day = int(date_to_string[0][2])
+
 
 # Print the current date in the default format (YYYY-MM-DD)
-print(current_Year)
-print(current_Month)
+
+
 #
 # Start_date = ""
 # End_date = ""
@@ -77,26 +80,68 @@ print(current_Month)
 # #     print(f"{Months[0]} has  {i}")
 
 
+month = 0
+Start_Date = [21, 7, current_Year]
+End_Date = [25,7,current_Year]
 
-Start_Date = [25,1,2023]
-End_Date = [30,1,2023]
-print(Start_Date[1])
-print(current_Month)
+addList = 0
 
+months = 1
+start = 1
+end = 5
 def run():
-    date_formater(Start_Date,End_Date)
-    while Start_Date[1] != current_Month:
+    Pussing_Dates = date_formater(Start_Date, End_Date)
+    passed = ""
+    for Pushing_Date in Pussing_Dates:
+        passed = Pushing_Date
+    yield passed
+    while (Start_Date[1] != current_Month or End_Date[0] <
+           current_Day):
         Start_Date[0] += 5
         End_Date[0] += 5
-        if End_Date[0] > 35:
+
+        if End_Date[0] == 30 and End_Date[1] == 2 and int(current_Year)%4 !=0:
+            End_Date[0] = 28
+        if End_Date[0] == 30 and End_Date[1] == 2 and int(current_Year)%4 ==0:
+            End_Date[0] = 29
+        if Start_Date[0] == 26 and  Start_Date[1] == 1:
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] == 3:
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] ==5:
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] == 7:
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] == 8 :
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] == 10 :
+            End_Date[0] = 31
+        if Start_Date[0] == 26 and  Start_Date[1] == 12 :
+            End_Date[0] = 31
+        # changing end dates for april, jun sep and nov
+        if Start_Date[0] == 26 and Start_Date[1] == 4:
+            End_Date[0] = 30
+        if Start_Date[0] == 26 and Start_Date[1] == 6:
+            End_Date[0] = 30
+        if Start_Date[0] == 26 and Start_Date[1] == 9:
+            End_Date[0] = 30
+        if Start_Date[0] == 26 and Start_Date[1] == 11:
+            End_Date[0] = 30
+        if  End_Date[0] <= current_Day and Start_Date[1] == current_Month and current_Day %5 !=0:
+            End_Date[0] = current_Day
+        if Start_Date[0] == 31:
             Start_Date[1] += 1
             End_Date[1] += 1
             Start_Date[0] =1
             End_Date[0] =5
 
-        print(f"start {Start_Date}")
-        print(f"end {End_Date}")
-        date_formater(Start_Date,End_Date)
+        # print(f"start {Start_Date}")
+        # print(f"end {End_Date}")
+        Pussing_Dates =date_formater(Start_Date,End_Date)
+        passed = ""
+        for Pushing_Date in Pussing_Dates:
+            passed = Pushing_Date
+        yield passed
 
 
 
@@ -133,37 +178,41 @@ def date_formater(S_date,E_date):
     S_date[1] = new_value
     E_date[1] = new_value
 
-    print(S_date[1])
-
-    if S_date[1] == "Apr" or S_date[1] == "Jun" or S_date[1] == "Sep" or S_date[1] == "Nov":
-        E_date[0] = 30
-    elif S_date[1] == "Feb" and int(current_Year) %4 !=0  and S_date[0] >= 25:
-        E_date[0] = 28
-    elif S_date[1] == "Feb" and int(current_Year) == 0 and  S_date[0] >= 25:
-        E_date[0] = 29
-    elif E_date[0] >=30:
-        E_date[0] = 31
 
 
 
     Formted_Sdate = "-".join(map(str,S_date))
     Formted_Edate = "-".join(map(str, E_date))
 
-    get_niid_spool(Formted_Sdate,Formted_Edate)
-    change_sheet_name()
-    errmessage = Push_to_Niid()
-    print(errmessage)
     try:
-        os.remove(file_path)
-        print(f"File '{file_path}' has been deleted.")
-    except FileNotFoundError:
-        print(f"File '{file_path}' not found.")
+
+        get_niid_spool(Formted_Sdate,Formted_Edate)
+        change_sheet_name()
     except Exception as e:
-        print(f"An error occurred: {e}")
+        if e:
+            print(e)
+
+            time.sleep(3)
+
+            return
+
+    print("gotten Data")
+    try:
+        errmessage = Push_to_Niid()
+    except Exception as e:
+        if e:
+            print(e)
+            time.sleep(3)
+            return errmessage
+
+    delete()
 
 
-    print(Formted_Sdate)
-    print(Formted_Edate)
+    yield [Formted_Sdate, Formted_Edate,errmessage]
+    time.sleep(5)
+
+
+
 
 
     if  S_date[1] == "Jan":
@@ -196,16 +245,10 @@ def date_formater(S_date,E_date):
 
 
 
-
-
-run()
-
-
 # num = 31
 # i=0
 # for i in range(num):
 #     if i % 5 == 0:
 #         print(i)
 #     print(i+1)
-
 
