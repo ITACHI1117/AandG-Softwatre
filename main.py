@@ -45,6 +45,8 @@ def run_program():
             error_message.config(text=f"Done✅", bootstyle="success")
             Reg_update_button.config(state="enabled")
             auto_push.config(state="enabled")
+            time.sleep(10)
+            error_message.config(text=f"", bootstyle="success")
         except Exception as e:
             print(e)
             error_message.config(text=f"There was an error", bootstyle="danger")
