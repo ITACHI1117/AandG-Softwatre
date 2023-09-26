@@ -75,7 +75,7 @@ def run_program():
     # Continue Pusshing if an error occurs
     def continue_run_program_auto():
         print(f"push dates {push_Sdate},{push_Edate}")
-        time.sleep(3)
+        time.sleep(4)
         error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
         Reg_update_button.config(state="disabled")
         auto_push.config(state="disabled")

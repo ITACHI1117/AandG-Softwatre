@@ -29,7 +29,7 @@ def get_niid_spool(start_date,end_date):
     # prefs = {'download.default_directory': 'C:\\Users\\ICT001\\PycharmProjects\\A&G Software'}
     # options.add_experimental_option('prefs', prefs)
     # options.add_argument("--headless=new")
-    # # options.add_argument("--start-maximized")
+    # options.add_argument("--start-minimized")
     options.add_argument('--log-level=3')
 
     # Provide the path of chromedriver present on your system.
@@ -37,6 +37,7 @@ def get_niid_spool(start_date,end_date):
     service = Service(executable_path=path)
     driver = webdriver.Chrome(options=options, service=service)
     # driver.set_window_size(1920, 1080)
+    # driver.minimize_window()
 
     # Send a get request to the url
     driver.get("https://aginsuranceapplications.com/card/Index.aspx")

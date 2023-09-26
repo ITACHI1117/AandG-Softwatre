@@ -69,7 +69,7 @@ def Push_to_Niid():
     #Uploading the file
     time.sleep(0.8)
     driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[7]/td[2]/div/ul/li/span/input[3]").send_keys(file_path)
-    time.sleep(5)
+    time.sleep(10)
 
     #Upload button
     driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[9]/TD[2]/span/input").click()
