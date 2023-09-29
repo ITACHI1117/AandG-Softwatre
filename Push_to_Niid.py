@@ -21,6 +21,7 @@ def Push_to_Niid():
     options = webdriver.ChromeOptions()
     # options.add_argument("--headless=new")
     # options.add_argument("--start-maximized")
+    options.add_argument("--start-minimized")
     options.add_argument('--log-level=3')
 
     # Provide the path of chromedriver present on your system.
@@ -29,7 +30,6 @@ def Push_to_Niid():
     driver = webdriver.Chrome(options=options, service=service)
     # driver.set_window_size(1920, 1080)
 
-    #driver.find_element(by="id", value="file-upload").send_keys("C:/Users/ICT001/Downloads/selenium-snapshot.PNG")
     # Send a get request to the url
     driver.get('https://niid.org/default.aspx')
     time.sleep(0.2)

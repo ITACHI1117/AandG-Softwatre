@@ -78,7 +78,7 @@ def run(push_start_date,push_end_month,):
             End_Date[0] = 30
         # if End_Date[0] >= current_Day and Start_Date[1] == current_Month and current_Day % 5 != 0:
         #     End_Date[0] = current_Day
-        if End_Date[0] >= current_Day:
+        if End_Date[0] >= current_Day and Start_Date[1] == current_Month:
             End_Date[0] = current_Day
         if Start_Date[0] == 31:
             Start_Date[1] += 1
@@ -166,6 +166,7 @@ def date_formater(S_date,E_date):
 
     delete()
 
+
     yield [Formted_Sdate,Formted_Edate,errmessage,S_date,E_date]
 
 
@@ -198,10 +199,11 @@ def date_formater(S_date,E_date):
     S_date[1] = new_value
     E_date[1] = new_value
 
-    # print(S_date)
-    # print(E_date)
-    #
-    # print(Formted_Sdate)
+    print(S_date)
+    print(E_date)
+
+    print(Formted_Sdate)
+    print(Formted_Edate)
 
     #storing the data so it can be passed when the function is called
 
