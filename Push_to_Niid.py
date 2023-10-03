@@ -1,7 +1,7 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
-
+from dotenv import load_dotenv
 import os
 from pathlib import Path
 
@@ -9,9 +9,13 @@ from selenium.webdriver.common.by import By
 
 
 def Push_to_Niid():
+    load_dotenv()
+    NIID_EMAIL = os.getenv("NIID_EMAIL")
+    NIID_PASSWORD = os.getenv("NIID_PASSWORD")
+    NIID_LINK = os.getenv("NIID_LINK")
     # Provide the email and password
-    email = 'ag.vera'
-    password = 'insurance'
+    email = NIID_EMAIL
+    password = NIID_PASSWORD
     comapny_email = 'info@aginsuranceplc.com'
 
     downloads_path = Path.home() / "Downloads"
@@ -31,7 +35,7 @@ def Push_to_Niid():
     # driver.set_window_size(1920, 1080)
 
     # Send a get request to the url
-    driver.get('https://niid.org/default.aspx')
+    driver.get(NIID_LINK)
     time.sleep(0.2)
     # Finds the input box by name in DOM tree to send both
     # the provided email and password in it.

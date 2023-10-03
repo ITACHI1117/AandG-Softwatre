@@ -9,7 +9,7 @@ def openNewWindow(root,errmessage):
 
     # sets the title of the
     # Toplevel widget
-    newWindow.title("New Window")
+    newWindow.title("Push results")
     newWindow.iconbitmap("./A&GICON.ico")
     newWindow.geometry('1000x600')
 
@@ -27,6 +27,7 @@ def openNewWindow(root,errmessage):
              xscrollcommand=h.set,
              yscrollcommand=v.set)
     t.pack(fill="both", expand=True,)
+    #Passed in the reuslts {errmessage}
     t.insert(END, f"{errmessage}")
     # t.tag_add("start", "1.6", "1.12")
     t.pack(side=TOP, fill=X)

@@ -128,7 +128,7 @@ def run_program():
             # Getting the formated date
             formated_start_date = format_date(edited_start_date)
             formated_end_date = format_date(edited_end_date)
-
+        #Getting the file from A&G
             try:
                 error_message.config(text="Geting the file👩‍💻", bootstyle="success")
                 get_niid_spool(formated_start_date, formated_end_date)
@@ -138,6 +138,8 @@ def run_program():
                 if e:
                     print(e)
                     error_message.config(text="There was an error", bootstyle="danger")
+                    Reg_update_button.config(state="enabled")
+                    delete()
                     time.sleep(3)
                     error_message.config(text="", )
                     return
@@ -151,6 +153,8 @@ def run_program():
                 if e:
                     print(e)
                     error_message.config(text="There was an error", bootstyle="danger")
+                    Reg_update_button.config(state="enabled")
+                    delete()
                     time.sleep(3)
                     error_message.config(text="", )
                     return
@@ -161,14 +165,16 @@ def run_program():
             error_message.config(text="")
             print("Done")
             #deleting file when done
-            try:
-                os.remove(file_path)
-                print(f"File '{file_path}' has been deleted.")
-            except FileNotFoundError:
-                print(f"File '{file_path}' not found.")
-            except Exception as e:
-                print(f"An error occurred: {e}")
+            delete()
             Reg_update_button.config(state="enabled")
+            # try:
+            #     os.remove(file_path)
+            #     print(f"File '{file_path}' has been deleted.")
+            # except FileNotFoundError:
+            #     print(f"File '{file_path}' not found.")
+            # except Exception as e:
+            #     print(f"An error occurred: {e}")
+
 
     # Push Manally run in background thread
     def run_function_in_background():

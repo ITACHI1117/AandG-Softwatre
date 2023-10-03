@@ -3,6 +3,7 @@ from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 from Change_Sheet_Name import change_sheet_name
@@ -12,14 +13,18 @@ from Change_Sheet_Name import change_sheet_name
 
 
 def get_niid_spool(start_date,end_date):
-
+    load_dotenv()
+    THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
+    THIRD_PARTY_PLATFORM_EMAIL = os.getenv("3RD_PARTY_PLATFORM_EMAIL")
+    THIRD_PARTY_PLATFORM_PASSWORD = os.getenv("3RD_PARTY_PLATFORM_PASSWORD")
     downloads_path = Path.home() / "Downloads"
     directory_path = downloads_path
     file_name = "NIID Spool.xlsx"
     file_path = os.path.join(directory_path, file_name)
+
     # Provide the email and password
-    email = "mayowa_admin"
-    password = "Gbohunmi17"
+    email = THIRD_PARTY_PLATFORM_EMAIL
+    password = THIRD_PARTY_PLATFORM_PASSWORD
 
     # start_date = "01-Sep-2023"
     # end_date = "30-Sep-2023"
@@ -40,7 +45,7 @@ def get_niid_spool(start_date,end_date):
     # driver.minimize_window()
 
     # Send a get request to the url
-    driver.get("https://aginsuranceapplications.com/card/Index.aspx")
+    driver.get(THIRD_PARTY_PLATFORM_LINK)
     time.sleep(0.2)
     # https: // auth.geeksforgeeks.org /
 
