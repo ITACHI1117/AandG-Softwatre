@@ -7,6 +7,7 @@ import threading
 from Delete_file_when_done import delete
 from Error_messges import openNewWindow
 from Get_Niid_Spool import get_niid_spool
+from Get_last_push_dates import get_last_push_dates
 from Push_to_Niid import Push_to_Niid
 import os
 from pathlib import Path
@@ -16,6 +17,7 @@ from Comparing_Date import comparing_date
 from Write_logs import write_logs
 from push_date import run
 from Change_Sheet_Name import change_sheet_name
+from write_last_date import write_last_push_date
 
 LightTheme = ["pulse", "default", "default", "white"]
 DarkTheme = ["cyborg", "dark", "default", "black"]
@@ -51,14 +53,17 @@ def run_program():
                 push_Sdate = Pushing_date[3]
                 push_Edate = Pushing_date[4]
                 print(push_Sdate, push_Edate)
+                write_last_push_date(push_Sdate, push_Edate)
             error_message.config(text=f"Done✅", bootstyle="success")
             time.sleep(10)
             error_message.config(text=f"", bootstyle="success")
             continue_push.config(state="disabled")
             return push_Sdate,push_Edate
         except Exception as e:
+            # writing the last push date so for the continue function
+            write_last_push_date(push_Sdate, push_Edate)
             print(e)
-            # print(push_Sdate, push_Edate)
+            #deleting the niid file
             delete()
             continue_push.config(state="enabled")
             error_message.config(text=f"There was an error", bootstyle="danger")
@@ -74,7 +79,8 @@ def run_program():
 
     # Continue Pusshing if an error occurs
     def continue_run_program_auto():
-        print(f"push dates {push_Sdate},{push_Edate}")
+        START_DATE,END_DATE = get_last_push_dates()
+        print(f"push dates {START_DATE},{END_DATE}")
         time.sleep(4)
         error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
         Reg_update_button.config(state="disabled")
@@ -83,20 +89,23 @@ def run_program():
         try:
             error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
             # Continuing push form last date
-            Pushing_dates = run(push_Sdate, push_Edate)
+            Pushing_dates = run(START_DATE, END_DATE)
             for Pushing_date in Pushing_dates:
                 error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
                 print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
                 write_logs(Pushing_date[0], Pushing_date[1], Pushing_date[2])
+                write_last_push_date(START_DATE, END_DATE)
             error_message.config(text=f"Done✅", bootstyle="success")
             Reg_update_button.config(state="enabled")
             auto_push.config(state="enabled")
             time.sleep(10)
             error_message.config(text=f"", bootstyle="success")
         except Exception as e:
+            write_last_push_date(START_DATE, END_DATE)
+            delete()
+            error_message.config(text=f"There was an error", bootstyle="danger")
             print(e)
             continue_push.config(state="enabled")
-            error_message.config(text=f"There was an error", bootstyle="danger")
             Reg_update_button.config(state="enabled")
             auto_push.config(state="enabled")
             time.sleep(10)
