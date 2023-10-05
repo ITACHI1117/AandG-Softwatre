@@ -30,8 +30,8 @@ end = 5
 def run(push_start_date,push_end_month,):
     #Checking if the user wants to continue push and values were passes in to the run function
     if push_start_date == "" and push_end_month == "":
-        Start_Date = [1, 6, current_Year]
-        End_Date = [5, 6, current_Year]
+        Start_Date = [1, 1, current_Year]
+        End_Date = [5, 1, current_Year]
     else:
         Start_Date = push_start_date
         End_Date = push_end_month
