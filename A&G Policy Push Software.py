@@ -189,13 +189,7 @@ def run_program():
             #deleting file when done
             delete()
             Reg_update_button.config(state="enabled")
-            # try:
-            #     os.remove(file_path)
-            #     print(f"File '{file_path}' has been deleted.")
-            # except FileNotFoundError:
-            #     print(f"File '{file_path}' not found.")
-            # except Exception as e:
-            #     print(f"An error occurred: {e}")
+
 
 
     # Push Manally run in background thread
