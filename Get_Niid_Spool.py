@@ -1,6 +1,4 @@
 # Import the required modules
-import warnings
-
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
@@ -15,7 +13,6 @@ from Change_Sheet_Name import change_sheet_name
 
 
 def get_niid_spool(start_date,end_date,SHOW_WINDOW):
-    warnings.filterwarnings("ignore")
     #enviroment variables
     load_dotenv()
     THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
@@ -36,15 +33,21 @@ def get_niid_spool(start_date,end_date,SHOW_WINDOW):
     wait_time = 0
 
 
+    # start_date = "01-Sep-2023"
+    # end_date = "30-Sep-2023"
+
+    # driverService = webdriver.ChromeService
+    # driverService.HideCommandPromptWindow = True;
+
     options = webdriver.ChromeOptions()
     options.add_argument(SHOW_WINDOW)
-    # options.add_argument("--start-minimized")
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    options.add_argument('--log-level=3')
+    options.add_argument('--log-level=0')
 
     # Provide the path of chromedriver present on your system.
     path = (r"chromedriver.exe")
     service = Service(executable_path=path)
+    service.creation_flags = 0x08000000
     driver = webdriver.Chrome(options=options, service=service)
     # driver.set_window_size(1920, 1080)
     # driver.minimize_window()

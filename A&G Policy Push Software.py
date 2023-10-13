@@ -25,7 +25,7 @@ Theme = DarkTheme
 
 root = tb.Window(themename=Theme[0])
 # root = Tk()
-root.title("A&G Policy Updater")
+root.title("A&G Policy Push Software")
 root.iconbitmap("./A&GICON.ico")
 root.geometry('1000x700')
 
@@ -153,7 +153,7 @@ def run_program():
         #Getting the file from A&G
             try:
                 error_message.config(text="Geting the file👩‍💻", bootstyle="success")
-                get_niid_spool(formated_start_date, formated_end_date)
+                get_niid_spool(formated_start_date, formated_end_date,SHOW_WINDOW)
                 error_message.config(text="Edditing Sheet‍💻", bootstyle="success")
                 change_sheet_name()
             except Exception as e:
@@ -169,7 +169,7 @@ def run_program():
             print("gotten Data")
             try:
                 error_message.config(text="Pushing to NIID👩‍💻", bootstyle="success")
-                errmessage = Push_to_Niid()
+                errmessage = Push_to_Niid(SHOW_WINDOW)
                 openNewWindow(root, errmessage)
             except Exception as e:
                 if e:

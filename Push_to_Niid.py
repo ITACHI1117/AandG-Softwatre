@@ -26,11 +26,12 @@ def Push_to_Niid(SHOW_WINDOW):
     options.add_argument(SHOW_WINDOW)
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--start-minimized")
-    options.add_argument('--log-level=3')
+    options.add_argument('--log-level=0')
 
     # Provide the path of chromedriver present on your system.
     path = (r"chromedriver.exe")
     service = Service(executable_path=path)
+    service.creation_flags = 0x08000000
     driver = webdriver.Chrome(options=options, service=service)
     # driver.set_window_size(1920, 1080)
 
