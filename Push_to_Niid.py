@@ -8,7 +8,7 @@ from pathlib import Path
 from selenium.webdriver.common.by import By
 
 
-def Push_to_Niid():
+def Push_to_Niid(SHOW_WINDOW):
     load_dotenv()
     NIID_EMAIL = os.getenv("NIID_EMAIL")
     NIID_PASSWORD = os.getenv("NIID_PASSWORD")
@@ -23,8 +23,8 @@ def Push_to_Niid():
 
 
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
-    # options.add_argument("--start-maximized")
+    options.add_argument(SHOW_WINDOW)
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--start-minimized")
     options.add_argument('--log-level=3')
 

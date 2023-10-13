@@ -27,7 +27,7 @@ addList = 0
 months = 1
 start = 1
 end = 5
-def run(push_start_date,push_end_month,):
+def run(push_start_date,push_end_month,SHOW_WINDOW):
     #Checking if the user wants to continue push and values were passes in to the run function
     if push_start_date == "" and push_end_month == "":
         Start_Date = [1, 1, current_Year]
@@ -39,7 +39,7 @@ def run(push_start_date,push_end_month,):
         # print(End_Date)
 
     # running the function to get the first values
-    Pussing_Dates = date_formater(Start_Date, End_Date)
+    Pussing_Dates = date_formater(Start_Date, End_Date,SHOW_WINDOW)
     passed = ""
     for Pushing_Date in Pussing_Dates:
         passed = Pushing_Date
@@ -89,7 +89,7 @@ def run(push_start_date,push_end_month,):
         # print(f"start {Start_Date}")
         # print(f"end {End_Date[0]}")
         #Geting the data from the date formatte
-        Pussing_Dates =date_formater(Start_Date,End_Date)
+        Pussing_Dates =date_formater(Start_Date,End_Date,SHOW_WINDOW)
         passed = ""
         for Pushing_Date in Pussing_Dates:
 
@@ -98,7 +98,7 @@ def run(push_start_date,push_end_month,):
 
 
 # This function formats the date and runs the push functions
-def date_formater(S_date,E_date):
+def date_formater(S_date,E_date,SHOW_WINDOW):
     downloads_path = Path.home() / "Downloads"
     file_path = f"{downloads_path}/NIID Spool.xlsx"
 
@@ -145,8 +145,7 @@ def date_formater(S_date,E_date):
 
     #running the functions
     try:
-
-        get_niid_spool(Formted_Sdate,Formted_Edate)
+        get_niid_spool(Formted_Sdate,Formted_Edate,SHOW_WINDOW)
         change_sheet_name()
     except Exception as e:
         delete()
@@ -156,7 +155,7 @@ def date_formater(S_date,E_date):
 
     # print("gotten Data")
     try:
-        errmessage = Push_to_Niid()
+        errmessage = Push_to_Niid(SHOW_WINDOW)
     except Exception as e:
         delete()
         print(e)

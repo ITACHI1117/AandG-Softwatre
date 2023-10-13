@@ -33,8 +33,21 @@ root.geometry('1000x700')
 push_Sdate = ""
 push_Edate = ""
 
-
+#Chrome window state
+SHOW_WINDOW = "null"
 def run_program():
+
+    # Detremine if the chrome window will run headless or not
+    def window_satus_on():
+        global SHOW_WINDOW
+        show_window_button.config(bootstyle="success", text="ON", command=window_satus_off)
+        SHOW_WINDOW = "null"
+
+    def window_satus_off():
+        global SHOW_WINDOW
+        show_window_button.config(bootstyle="secondary", text="OFF", command=window_satus_on)
+        SHOW_WINDOW = "--headless=new"
+
     #Automatic Push Function
     def run_auto_update():
         global push_Sdate
@@ -45,7 +58,7 @@ def run_program():
         try:
             error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
             # running push
-            Pushing_dates = run("", "")
+            Pushing_dates = run("", "",SHOW_WINDOW)
             for Pushing_date in Pushing_dates:
                 error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
                 print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
@@ -89,7 +102,7 @@ def run_program():
         try:
             error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
             # Continuing push form last date
-            Pushing_dates = run(START_DATE, END_DATE)
+            Pushing_dates = run(START_DATE, END_DATE,SHOW_WINDOW)
             for Pushing_date in Pushing_dates:
                 error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
                 print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
@@ -234,9 +247,16 @@ def run_program():
     auto_push = tb.Button(my_frame, bootstyle="danger", text="Push Automatically", width=30, command=run_program_auto)
     auto_push.pack(padx=(0, 0), pady=10, )
 
-    continue_push = tb.Button(my_frame, bootstyle="success", text="Continue Push?", width=25, state="disabled",
+    continue_push = tb.Button(my_frame, bootstyle="danger", text="Continue Push?", width=25, state="disabled",
                               command=continue_run_program_auto_background)
     continue_push.pack(padx=(0, 0), pady=10, )
+
+    my_label = tb.Label(my_frame, text="Show Chrome Window", bootstyle=Theme[2], font=("Helvetica", 12))
+    my_label.pack(pady=10, padx=(20, 20))
+
+    show_window_button = tb.Button(my_frame, text="ON", state="enabled", bootstyle="success", width=20,
+                                   command=window_satus_off)
+    show_window_button.pack(pady=0, padx=0)
 
     error_message = tb.Label(my_frame, text="", bootstyle="danger", font=("Inter", 9))
     error_message.pack(pady=2, padx=(10, 20))
