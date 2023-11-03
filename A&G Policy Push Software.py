@@ -1,9 +1,12 @@
 import time
 from tkinter import *
+from tkinter import messagebox
+
 import ttkbootstrap as tb
 import customtkinter
 import threading
 
+from Check_driver import Check_and_install_Updated_driver
 from Delete_file_when_done import delete
 from Error_messges import openNewWindow
 from Get_Niid_Spool import get_niid_spool
@@ -21,7 +24,7 @@ from write_last_date import write_last_push_date
 
 LightTheme = ["pulse", "default", "default", "white"]
 DarkTheme = ["cyborg", "dark", "default", "black"]
-Theme = DarkTheme
+Theme = LightTheme
 
 root = tb.Window(themename=Theme[0])
 # root = Tk()
@@ -37,6 +40,9 @@ push_Edate = ""
 SHOW_WINDOW = "null"
 def run_program():
 
+    Status = Check_and_install_Updated_driver()
+    messagebox.showinfo("Driver verification",
+                        Status)
     # Detremine if the chrome window will run headless or not
     def window_satus_on():
         global SHOW_WINDOW
