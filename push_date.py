@@ -16,7 +16,7 @@ current_date = datetime.date.today()
 date_to_string = [str(current_date).split("-")]
 
 
-current_Year = date_to_string[0][0]
+current_Year = int(date_to_string[0][0])
 current_Month = int(date_to_string[0][1])
 current_Day = int(date_to_string[0][2])
 
@@ -30,8 +30,12 @@ end = 5
 def run(push_start_date,push_end_month,SHOW_WINDOW):
     #Checking if the user wants to continue push and values were passes in to the run function
     if push_start_date == "" and push_end_month == "":
-        Start_Date = [1, 1, current_Year]
-        End_Date = [5, 1, current_Year]
+        if current_Month == 12:
+            Start_Date = [1, 1, current_Year]
+            End_Date = [5, 1, current_Year]
+        else:
+          Start_Date = [1, current_Month+1, current_Year-1]
+          End_Date = [5, current_Month+1, current_Year-1]
     else:
         Start_Date = push_start_date
         End_Date = push_end_month
@@ -45,7 +49,7 @@ def run(push_start_date,push_end_month,SHOW_WINDOW):
         passed = Pushing_Date
     yield passed
     while (Start_Date[1] != current_Month or End_Date[0] <
-           current_Day):
+           current_Day or End_Date[2] != current_Year):
         Start_Date[0] += 5
         End_Date[0] += 5
         # Formatting the date depending on the specific months
@@ -80,11 +84,29 @@ def run(push_start_date,push_end_month,SHOW_WINDOW):
         #     End_Date[0] = current_Day
         if End_Date[0] >= current_Day and Start_Date[1] == current_Month:
             End_Date[0] = current_Day
-        if Start_Date[0] == 31:
-            Start_Date[1] += 1
-            End_Date[1] += 1
+        if Start_Date[0] == 31 and Start_Date[1] == 12 and Start_Date[2] != current_Year:
+            Start_Date[1] = 1
+            End_Date[1] = 1
             Start_Date[0] =1
             End_Date[0] =5
+            Start_Date[2] +=1
+            End_Date[2] +=1
+        if Start_Date[0] == 31:
+            Start_Date[1] +=1
+            End_Date[1] +=1
+            Start_Date[0] = 1
+            End_Date[0] = 5
+        # if Start_Date[0] == 31:
+        #     Start_Date[1] += 1
+        #     End_Date[1] += 1
+        #     Start_Date[0] =1
+        #     End_Date[0] =5
+        #     Start_Date[1] =1
+        #     End_Date[1] =1
+
+
+
+
 
         # print(f"start {Start_Date}")
         # print(f"end {End_Date[0]}")
@@ -138,7 +160,8 @@ def date_formater(S_date,E_date,SHOW_WINDOW):
     Formted_Sdate = "-".join(map(str,S_date))
     Formted_Edate = "-".join(map(str, E_date))
 
-    # print(Formted_Sdate)
+    print(Formted_Sdate)
+    print(Formted_Edate)
 
 
     # time.sleep(2)
@@ -153,7 +176,7 @@ def date_formater(S_date,E_date,SHOW_WINDOW):
         time.sleep(3)
         return
 
-    # print("gotten Data")
+    print("gotten Data")
     try:
         errmessage = Push_to_Niid(SHOW_WINDOW)
     except Exception as e:
@@ -161,7 +184,6 @@ def date_formater(S_date,E_date,SHOW_WINDOW):
         print(e)
         time.sleep(3)
         return errmessage
-
 
     delete()
 

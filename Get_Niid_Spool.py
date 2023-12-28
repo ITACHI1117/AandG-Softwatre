@@ -49,7 +49,7 @@ def get_niid_spool(start_date,end_date,SHOW_WINDOW):
     service = Service(executable_path=path)
     service.creation_flags = 0x08000000
     driver = webdriver.Chrome(options=options, service=service)
-    # driver.set_window_size(1920, 1080)
+    driver.set_window_size(1200, 800)
     # driver.minimize_window()
 
     # Send a get request to the url
