@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cf7b7db-0ae6-4cd8-b105-1bc4d7cb1dcf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/A&amp;G Policy Push Software.py" beforeDir="false" afterPath="$PROJECT_DIR$/A&amp;G Policy Push Software.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Check_driver.py" beforeDir="false" afterPath="$PROJECT_DIR$/Check_driver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Get_Niid_Spool.py" beforeDir="false" afterPath="$PROJECT_DIR$/Get_Niid_Spool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chromedriver-win64/LICENSE.chromedriver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chromedriver.exe" beforeDir="false" afterPath="$PROJECT_DIR$/chromedriver.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/push_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/push_date.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/A&amp;G Policy Push Software/A&amp;G Policy Push Software.exe" beforeDir="false" afterPath="$PROJECT_DIR$/output/A&amp;G Policy Push Software/A&amp;G Policy Push Software.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/ICT001/PycharmProjects/A&G Policy Update App",
+    "last_opened_file_path": "C:/Users/ICT001/PycharmProjects/A&G Software",
     "settings.editor.selected.configurable": "configurable.group.editor"
   }
 }]]></component>

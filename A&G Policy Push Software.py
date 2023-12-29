@@ -29,7 +29,8 @@ Theme = LightTheme
 
 root = tb.Window(themename=Theme[0])
 # root = Tk()
-root.title("A&G Policy Push Software")
+#################### E_in changes
+root.title("A&G Policy Push Software E-PIN")
 root.iconbitmap("./A&GICON.ico")
 root.geometry('1000x700')
 
@@ -222,8 +223,12 @@ def run_program():
     my_frame.pack(fill="both", expand=True, pady=70, padx=100)
     root.rowconfigure(4, weight=1)
 
+    #################### E_in changes
+    my_label = tb.Label(my_frame, text="E-PIN", bootstyle="default", font=("Inter", 18))
+    my_label.pack(pady=(2, 5), padx=(2, 2))
+
     my_label = tb.Label(my_frame, text="Push Manually", bootstyle="default", font=("Inter", 18))
-    my_label.pack(pady=(50, 1), padx=(20, 20))
+    my_label.pack(pady=(20, 1), padx=(20, 20))
 
     start_date = tb.DateEntry(my_frame, bootstyle="dark", )
     start_date.pack(pady=5)
