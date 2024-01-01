@@ -4,8 +4,6 @@ from pathlib import Path
 
 def write_logs(PUSH_START_DATE,PUSH_END_DATE,PUSH_MESSAGE):
 
-    # Checking what type of update the user wants to make
-
     # Creating the LOGS Folder if it does not exist
     Log_folder_name = "LOGS"
     if Path(Log_folder_name).is_dir():
@@ -20,21 +18,22 @@ def write_logs(PUSH_START_DATE,PUSH_END_DATE,PUSH_MESSAGE):
     Date_and_Time = str(formatted_datetime)
 
 
-
+    # passing the info to that was passed in from the function to PUSH_INFO
     PUSH_INFO = [f"Pushed from {PUSH_START_DATE} - {PUSH_END_DATE} \n",f"{PUSH_MESSAGE}"]
 
-    # Creating the RegCorrection log folder if it does not exist
-    folder_name = "Automatic_Push_logs"
+    # Creating the Automatic log folder if it does not exist
+    folder_name = f"Automatic_Push_logs___{Date_and_Time}"
     folder_path = "./LOGS/" + folder_name
 
     if Path(folder_path).is_dir():
         print("")
     else:
         os.makedirs(folder_path)
-    logs_path = "./LOGS/Automatic_Push_logs"
+    logs_path = f"./LOGS/Automatic_Push_logs___{Date_and_Time}"
     log_file = f"{PUSH_START_DATE} - {PUSH_END_DATE}.txt"
     log_file_path = logs_path + "/" + log_file
 
+    #Writing files
     with open(log_file_path, "w") as logs:
         logs.write(f"Policy Details{PUSH_INFO[0]}\n")
         logs.write(f"Policy Details{PUSH_INFO[1]}\n")

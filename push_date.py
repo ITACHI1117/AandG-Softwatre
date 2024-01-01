@@ -15,81 +15,30 @@ from pathlib import Path
 current_date = datetime.date.today()
 date_to_string = [str(current_date).split("-")]
 
+
 current_Year = date_to_string[0][0]
 current_Month = int(date_to_string[0][1])
 current_Day = int(date_to_string[0][2])
 
 
-# Print the current date in the default format (YYYY-MM-DD)
-
-
-#
-# Start_date = ""
-# End_date = ""
-#
-# Months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-#
-# Days = ""
-# for Month in Months:
-#     if Month == "Apr" or Month == "Jun" or Month == "Sep" or Month == "Nov":
-#         Days = 30
-#     elif int(current_Year) % 4 == 0 and Month == "Feb":
-#         Days = 28
-#     elif int(current_Year) % 4 != 0 and Month == "Feb":
-#         Days = 29
-#     else:
-#         Days = 31
-#
-#     calendar = [[Month],[Days]]
-#     print(calendar[1][0])
-#
-#     i = 0
-#     start = 0
-#     end = 5
-#
-#     print(f"{start + 1}-{end}")
-#     while i <= calendar[1][0] - 1:
-#         if i == 0:
-#             pass
-#         start += 5
-#         end += 5
-#         if end >= calendar[1][0]:
-#             break
-#         print(calendar[0][0])
-#         print(f"{start}-{end}")
-#
-#     print(f"{Months[0]} has  {i}")
-#
-#
-#
-# # def passing_date():
-# #     i = 0
-# #     start = 0
-# #     end = 5
-# #
-# #     print(f"{start + 1}-{end}")
-# #     while i <= 31 - 1:
-# #         if i == 0:
-# #             pass
-# #         start += 5
-# #         end += 5
-# #         if end >= 31:
-# #             break
-# #         print(f"{start}-{end}")
-# #
-# #     print(f"{Months[0]} has  {i}")
-
-
 month = 0
-Start_Date = [21, 7, current_Year]
-End_Date = [25,7,current_Year]
-
 addList = 0
 
 months = 1
 start = 1
 end = 5
-def run():
+def run(push_start_date,push_end_month,):
+    #Checking if the user wants to continue push and values were passes in to the run function
+    if push_start_date == "" and push_end_month == "":
+        Start_Date = [1, 9, current_Year]
+        End_Date = [5, 9, current_Year]
+    else:
+        Start_Date = push_start_date
+        End_Date = push_end_month
+        print(Start_Date[1])
+        print(End_Date)
+
+    # running the function to get the first values
     Pussing_Dates = date_formater(Start_Date, End_Date)
     passed = ""
     for Pushing_Date in Pussing_Dates:
@@ -99,7 +48,7 @@ def run():
            current_Day):
         Start_Date[0] += 5
         End_Date[0] += 5
-
+        # Formatting the date depending on the specific months
         if End_Date[0] == 30 and End_Date[1] == 2 and int(current_Year)%4 !=0:
             End_Date[0] = 28
         if End_Date[0] == 30 and End_Date[1] == 2 and int(current_Year)%4 ==0:
@@ -137,42 +86,45 @@ def run():
 
         # print(f"start {Start_Date}")
         # print(f"end {End_Date}")
+        #Geting the data from the date formatte
         Pussing_Dates =date_formater(Start_Date,End_Date)
         passed = ""
         for Pushing_Date in Pussing_Dates:
+
             passed = Pushing_Date
         yield passed
 
 
-
+# This function formats the date and runs the push functions
 def date_formater(S_date,E_date):
     downloads_path = Path.home() / "Downloads"
     file_path = f"{downloads_path}/NIID Spool.xlsx"
 
     new_value = ""
-    if  S_date[1] == 1:
+    #Formating the date
+    if  S_date[1] == 1 or S_date[1] == "Jan":
         new_value = "Jan"
-    if  S_date[1] == 2:
+    if  S_date[1] == 2 or S_date[1] == "Feb":
         new_value = "Feb"
-    if  S_date[1] == 3:
+    if  S_date[1] == 3 or S_date[1] == "Mar":
         new_value = "Mar"
-    if S_date[1] == 4:
+    if S_date[1] == 4 or S_date[1] == "Apr":
         new_value = "Apr"
-    if  S_date[1] == 5:
+    if  S_date[1] == 5 or S_date[1] == "May":
         new_value = "May"
-    if  S_date[1] == 6:
+    if  S_date[1] == 6 or S_date[1] == "Jun":
         new_value = "Jun"
-    if S_date[1] == 7:
+    if S_date[1] == 7 or S_date[1] == "Jul":
         new_value = "Jul"
-    if S_date[1] == 8:
+    if S_date[1] == 8 or S_date[1] == "Aug":
         new_value = "Aug"
-    if  S_date[1] == 9:
+    if  S_date[1] == 9 or S_date[1] == "Sep":
         new_value = "Sep"
-    if  S_date[1] == 10:
+    if  S_date[1] == 10 or S_date[1] == "Oct":
         new_value = "Oct"
-    if  S_date[1] == 11:
+    if  S_date[1] == 11 or S_date[1] == "Nov":
         new_value = "Nov"
-    if S_date[1] == 12:
+    if S_date[1] == 12 or  S_date[1] == "Dec":
         new_value = "Dec"
 
     S_date[1] = new_value
@@ -184,6 +136,12 @@ def date_formater(S_date,E_date):
     Formted_Sdate = "-".join(map(str,S_date))
     Formted_Edate = "-".join(map(str, E_date))
 
+    print(Formted_Sdate)
+
+
+    time.sleep(2)
+
+    #running the functions
     try:
 
         get_niid_spool(Formted_Sdate,Formted_Edate)
@@ -191,9 +149,7 @@ def date_formater(S_date,E_date):
     except Exception as e:
         if e:
             print(e)
-
             time.sleep(3)
-
             return
 
     print("gotten Data")
@@ -205,16 +161,13 @@ def date_formater(S_date,E_date):
             time.sleep(3)
             return errmessage
 
+
     delete()
 
-
-    yield [Formted_Sdate, Formted_Edate,errmessage]
-    time.sleep(5)
+    yield [Formted_Sdate, Formted_Edate, errmessage,S_date,E_date]
 
 
-
-
-
+    #Reformating the date so the run function can undersand
     if  S_date[1] == "Jan":
         new_value = 1
     if  S_date[1] == "Feb":
@@ -243,12 +196,12 @@ def date_formater(S_date,E_date):
     S_date[1] = new_value
     E_date[1] = new_value
 
+    print(S_date)
+    print(E_date)
+
+    print(Formted_Sdate)
+
+    #storing the data so it can be passed when the function is called
 
 
-# num = 31
-# i=0
-# for i in range(num):
-#     if i % 5 == 0:
-#         print(i)
-#     print(i+1)
 
