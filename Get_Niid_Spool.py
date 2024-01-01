@@ -3,6 +3,7 @@ from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 from Change_Sheet_Name import change_sheet_name
@@ -11,35 +12,48 @@ from Change_Sheet_Name import change_sheet_name
 # Main Function
 
 
-def get_niid_spool(start_date,end_date):
+def get_niid_spool(start_date,end_date,SHOW_WINDOW):
+    #enviroment variables
+    load_dotenv()
+    THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
+    THIRD_PARTY_PLATFORM_EMAIL = os.getenv("3RD_PARTY_PLATFORM_EMAIL")
+    THIRD_PARTY_PLATFORM_PASSWORD = os.getenv("3RD_PARTY_PLATFORM_PASSWORD")
 
+    # download path
     downloads_path = Path.home() / "Downloads"
     directory_path = downloads_path
     file_name = "NIID Spool.xlsx"
     file_path = os.path.join(directory_path, file_name)
+
     # Provide the email and password
-    email = "mayowa_admin"
-    password = "Gbohunmi17"
+    email = THIRD_PARTY_PLATFORM_EMAIL
+    password = THIRD_PARTY_PLATFORM_PASSWORD
+
+    #wait time
+    wait_time = 0
+
 
     # start_date = "01-Sep-2023"
     # end_date = "30-Sep-2023"
 
+    # driverService = webdriver.ChromeService
+    # driverService.HideCommandPromptWindow = True;
+
     options = webdriver.ChromeOptions()
-    # options.add_argument("download.default_directory=C:/Downloads")
-    # prefs = {'download.default_directory': 'C:\\Users\\ICT001\\PycharmProjects\\A&G Software'}
-    # options.add_experimental_option('prefs', prefs)
-    # options.add_argument("--headless=new")
-    # # options.add_argument("--start-maximized")
-    options.add_argument('--log-level=3')
+    options.add_argument(SHOW_WINDOW)
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument('--log-level=0')
 
     # Provide the path of chromedriver present on your system.
     path = (r"chromedriver.exe")
     service = Service(executable_path=path)
+    service.creation_flags = 0x08000000
     driver = webdriver.Chrome(options=options, service=service)
-    # driver.set_window_size(1920, 1080)
+    driver.set_window_size(1200, 800)
+    # driver.minimize_window()
 
     # Send a get request to the url
-    driver.get("https://aginsuranceapplications.com/card/Index.aspx")
+    driver.get(THIRD_PARTY_PLATFORM_LINK)
     time.sleep(0.2)
     # https: // auth.geeksforgeeks.org /
 
@@ -100,14 +114,14 @@ def get_niid_spool(start_date,end_date):
     time.sleep(2)
 
     try:
-      while not os.path.isfile(file_path):
+      while not os.path.isfile(file_path) and wait_time <=50:
         time.sleep(5)
+        wait_time +=1
         print(f"The file '{file_name}' does not exists in the directory '{directory_path}'.")
+        print(wait_time)
     except Exception as e:
         print(e)
 
-
-    time.sleep(5)
 
     time.sleep(5)
 

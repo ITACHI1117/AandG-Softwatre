@@ -1,17 +1,21 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.service import Service
-
+from dotenv import load_dotenv
 import os
 from pathlib import Path
 
 from selenium.webdriver.common.by import By
 
 
-def Push_to_Niid():
+def Push_to_Niid(SHOW_WINDOW):
+    load_dotenv()
+    NIID_EMAIL = os.getenv("NIID_EMAIL")
+    NIID_PASSWORD = os.getenv("NIID_PASSWORD")
+    NIID_LINK = os.getenv("NIID_LINK")
     # Provide the email and password
-    email = 'ag.vera'
-    password = 'insurance'
+    email = NIID_EMAIL
+    password = NIID_PASSWORD
     comapny_email = 'info@aginsuranceplc.com'
 
     downloads_path = Path.home() / "Downloads"
@@ -19,19 +23,20 @@ def Push_to_Niid():
 
 
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
-    # options.add_argument("--start-maximized")
-    options.add_argument('--log-level=3')
+    options.add_argument(SHOW_WINDOW)
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument("--start-minimized")
+    options.add_argument('--log-level=0')
 
     # Provide the path of chromedriver present on your system.
     path = (r"chromedriver.exe")
     service = Service(executable_path=path)
+    service.creation_flags = 0x08000000
     driver = webdriver.Chrome(options=options, service=service)
     # driver.set_window_size(1920, 1080)
 
-    #driver.find_element(by="id", value="file-upload").send_keys("C:/Users/ICT001/Downloads/selenium-snapshot.PNG")
     # Send a get request to the url
-    driver.get('https://niid.org/default.aspx')
+    driver.get(NIID_LINK)
     time.sleep(0.2)
     # Finds the input box by name in DOM tree to send both
     # the provided email and password in it.
@@ -69,7 +74,7 @@ def Push_to_Niid():
     #Uploading the file
     time.sleep(0.8)
     driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[7]/td[2]/div/ul/li/span/input[3]").send_keys(file_path)
-    time.sleep(5)
+    time.sleep(10)
 
     #Upload button
     driver.find_element(by="xpath", value="//form/table/tbody/tr[7]/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[9]/TD[2]/span/input").click()

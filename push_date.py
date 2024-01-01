@@ -16,7 +16,7 @@ current_date = datetime.date.today()
 date_to_string = [str(current_date).split("-")]
 
 
-current_Year = date_to_string[0][0]
+current_Year = int(date_to_string[0][0])
 current_Month = int(date_to_string[0][1])
 current_Day = int(date_to_string[0][2])
 
@@ -27,25 +27,29 @@ addList = 0
 months = 1
 start = 1
 end = 5
-def run(push_start_date,push_end_month,):
+def run(push_start_date,push_end_month,SHOW_WINDOW):
     #Checking if the user wants to continue push and values were passes in to the run function
     if push_start_date == "" and push_end_month == "":
-        Start_Date = [1, 9, current_Year]
-        End_Date = [5, 9, current_Year]
+        if current_Month == 12:
+            Start_Date = [1, 1, current_Year]
+            End_Date = [5, 1, current_Year]
+        else:
+          Start_Date = [1, current_Month+1, current_Year-1]
+          End_Date = [5, current_Month+1, current_Year-1]
     else:
         Start_Date = push_start_date
         End_Date = push_end_month
-        print(Start_Date[1])
-        print(End_Date)
+        # print(Start_Date[1])
+        # print(End_Date)
 
     # running the function to get the first values
-    Pussing_Dates = date_formater(Start_Date, End_Date)
+    Pussing_Dates = date_formater(Start_Date, End_Date,SHOW_WINDOW)
     passed = ""
     for Pushing_Date in Pussing_Dates:
         passed = Pushing_Date
     yield passed
     while (Start_Date[1] != current_Month or End_Date[0] <
-           current_Day):
+           current_Day or End_Date[2] != current_Year):
         Start_Date[0] += 5
         End_Date[0] += 5
         # Formatting the date depending on the specific months
@@ -76,18 +80,38 @@ def run(push_start_date,push_end_month,):
             End_Date[0] = 30
         if Start_Date[0] == 26 and Start_Date[1] == 11:
             End_Date[0] = 30
-        if  End_Date[0] <= current_Day and Start_Date[1] == current_Month and current_Day %5 !=0:
+        # if End_Date[0] >= current_Day and Start_Date[1] == current_Month and current_Day % 5 != 0:
+        #     End_Date[0] = current_Day
+        if End_Date[0] >= current_Day and Start_Date[1] == current_Month:
             End_Date[0] = current_Day
-        if Start_Date[0] == 31:
-            Start_Date[1] += 1
-            End_Date[1] += 1
+        if Start_Date[0] == 31 and Start_Date[1] == 12 and Start_Date[2] != current_Year:
+            Start_Date[1] = 1
+            End_Date[1] = 1
             Start_Date[0] =1
             End_Date[0] =5
+            Start_Date[2] +=1
+            End_Date[2] +=1
+        if Start_Date[0] == 31:
+            Start_Date[1] +=1
+            End_Date[1] +=1
+            Start_Date[0] = 1
+            End_Date[0] = 5
+        # if Start_Date[0] == 31:
+        #     Start_Date[1] += 1
+        #     End_Date[1] += 1
+        #     Start_Date[0] =1
+        #     End_Date[0] =5
+        #     Start_Date[1] =1
+        #     End_Date[1] =1
+
+
+
+
 
         # print(f"start {Start_Date}")
-        # print(f"end {End_Date}")
+        # print(f"end {End_Date[0]}")
         #Geting the data from the date formatte
-        Pussing_Dates =date_formater(Start_Date,End_Date)
+        Pussing_Dates =date_formater(Start_Date,End_Date,SHOW_WINDOW)
         passed = ""
         for Pushing_Date in Pussing_Dates:
 
@@ -96,7 +120,7 @@ def run(push_start_date,push_end_month,):
 
 
 # This function formats the date and runs the push functions
-def date_formater(S_date,E_date):
+def date_formater(S_date,E_date,SHOW_WINDOW):
     downloads_path = Path.home() / "Downloads"
     file_path = f"{downloads_path}/NIID Spool.xlsx"
 
@@ -137,34 +161,34 @@ def date_formater(S_date,E_date):
     Formted_Edate = "-".join(map(str, E_date))
 
     print(Formted_Sdate)
+    print(Formted_Edate)
 
 
-    time.sleep(2)
+    # time.sleep(2)
 
     #running the functions
     try:
-
-        get_niid_spool(Formted_Sdate,Formted_Edate)
+        get_niid_spool(Formted_Sdate,Formted_Edate,SHOW_WINDOW)
         change_sheet_name()
     except Exception as e:
-        if e:
-            print(e)
-            time.sleep(3)
-            return
+        delete()
+        print(e)
+        time.sleep(3)
+        return
 
     print("gotten Data")
     try:
-        errmessage = Push_to_Niid()
+        errmessage = Push_to_Niid(SHOW_WINDOW)
     except Exception as e:
-        if e:
-            print(e)
-            time.sleep(3)
-            return errmessage
-
+        delete()
+        print(e)
+        time.sleep(3)
+        return errmessage
 
     delete()
 
-    yield [Formted_Sdate, Formted_Edate, errmessage,S_date,E_date]
+
+    yield [Formted_Sdate,Formted_Edate,errmessage,S_date,E_date]
 
 
     #Reformating the date so the run function can undersand
@@ -200,6 +224,7 @@ def date_formater(S_date,E_date):
     print(E_date)
 
     print(Formted_Sdate)
+    print(Formted_Edate)
 
     #storing the data so it can be passed when the function is called
 
