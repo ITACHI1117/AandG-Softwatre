@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="7cf7b7db-0ae6-4cd8-b105-1bc4d7cb1dcf" name="Changes" comment="" />
+=======
     <list default="true" id="7cf7b7db-0ae6-4cd8-b105-1bc4d7cb1dcf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/A&amp;G Policy Push Software.py" beforeDir="false" afterPath="$PROJECT_DIR$/A&amp;G Policy Push Software.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/A&amp;G Policy Push Software/A&amp;G Policy Push Software.exe" beforeDir="false" afterPath="$PROJECT_DIR$/output/A&amp;G Policy Push Software/A&amp;G Policy Push Software.exe" afterDir="false" />
     </list>
+>>>>>>> adf6e33f10645371134bdff3ee01892abad6aa76
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -34,6 +41,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+<<<<<<< HEAD
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/itachi/PycharmProjects/AandG Software"
+=======
     "Python.A&G Policy Push Software.executor": "Run",
     "Python.push_date.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -41,6 +54,7 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/ICT001/PycharmProjects/A&G Software",
     "settings.editor.selected.configurable": "configurable.group.editor"
+>>>>>>> adf6e33f10645371134bdff3ee01892abad6aa76
   }
 }]]></component>
   <component name="RecentsManager">
@@ -49,17 +63,23 @@
     </key>
   </component>
   <component name="RunManager">
+<<<<<<< HEAD
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="AandG Software" />
+=======
     <configuration name="A&amp;G Policy Push Software" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="A&amp;G Software" />
       <option name="ENV_FILES" value="" />
+>>>>>>> adf6e33f10645371134bdff3ee01892abad6aa76
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\itachi\PycharmProjects\AandG Software\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11 (AandG Software)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="C:\Users\ICT001\PycharmProjects\A&amp;G Software\A&amp;G Policy Push Software.py" />

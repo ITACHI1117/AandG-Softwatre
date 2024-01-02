@@ -8,20 +8,25 @@ import customtkinter
 import threading
 
 from Check_driver import Check_and_install_Updated_driver
-from Delete_file_when_done import delete
+from Chek_unfinshed_push import check_last_push_file, check_last_push_file_epin
+from Delete_file_when_done import delete, delete_last_push_date, delete_last_push_date_epin
 from Error_messges import openNewWindow
 from Get_Niid_Spool import get_niid_spool
 from Get_last_push_dates import get_last_push_dates
+from Get_last_push_dates_epin import get_last_push_dates_epin
 from Push_to_Niid import Push_to_Niid
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 from Format_date import format_date
 from Comparing_Date import comparing_date
 from Write_logs import write_logs
+from Write_logs_epin import write_logs_epin
 from push_date import run
 from Change_Sheet_Name import change_sheet_name
 from write_last_date import write_last_push_date
+from write_last_date_epin import write_last_push_date_epin
 
 LightTheme = ["pulse", "default", "default", "white"]
 DarkTheme = ["cyborg", "dark", "default", "black"]
@@ -29,10 +34,10 @@ Theme = LightTheme
 
 root = tb.Window(themename=Theme[0])
 # root = Tk()
-#################### E_in changes
-root.title("A&G Policy Push Software E-PIN")
+
+root.title("A&G Policy Push Software")
 root.iconbitmap("./A&GICON.ico")
-root.geometry('1000x700')
+root.geometry('1000x800')
 
 # Done = ""
 push_Sdate = ""
@@ -43,8 +48,10 @@ SHOW_WINDOW = "null"
 def run_program():
 
     Status = Check_and_install_Updated_driver()
+
     messagebox.showinfo("Driver verification",
                         Status)
+
     # Detremine if the chrome window will run headless or not
     def window_satus_on():
         global SHOW_WINDOW
@@ -58,6 +65,11 @@ def run_program():
 
     #Automatic Push Function
     def run_auto_update():
+        # enviroment variables
+        load_dotenv()
+        THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
+        THIRD_PARTY_PLATFORM_EMAIL = os.getenv("THIRD_PARTY_PLATFORM_EMAIL")
+        THIRD_PARTY_DETAILS = [THIRD_PARTY_PLATFORM_LINK, THIRD_PARTY_PLATFORM_EMAIL]
         global push_Sdate
         global push_Edate
         error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
@@ -66,7 +78,7 @@ def run_program():
         try:
             error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
             # running push
-            Pushing_dates = run("", "",SHOW_WINDOW)
+            Pushing_dates = run("", "",SHOW_WINDOW,THIRD_PARTY_DETAILS)
             for Pushing_date in Pushing_dates:
                 error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
                 print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
@@ -76,6 +88,7 @@ def run_program():
                 print(push_Sdate, push_Edate)
                 write_last_push_date(push_Sdate, push_Edate)
             error_message.config(text=f"Done✅", bootstyle="success")
+            delete_last_push_date()
             time.sleep(10)
             error_message.config(text=f"", bootstyle="success")
             continue_push.config(state="disabled")
@@ -100,6 +113,11 @@ def run_program():
 
     # Continue Pusshing if an error occurs
     def continue_run_program_auto():
+        # enviroment variables
+        load_dotenv()
+        THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
+        THIRD_PARTY_PLATFORM_EMAIL = os.getenv("THIRD_PARTY_PLATFORM_EMAIL")
+        THIRD_PARTY_DETAILS = [THIRD_PARTY_PLATFORM_LINK, THIRD_PARTY_PLATFORM_EMAIL]
         START_DATE,END_DATE = get_last_push_dates()
         print(f"push dates {START_DATE},{END_DATE}")
         time.sleep(4)
@@ -110,15 +128,17 @@ def run_program():
         try:
             error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
             # Continuing push form last date
-            Pushing_dates = run(START_DATE, END_DATE,SHOW_WINDOW)
+            Pushing_dates = run(START_DATE, END_DATE,SHOW_WINDOW,THIRD_PARTY_DETAILS)
             for Pushing_date in Pushing_dates:
                 error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
                 print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
                 write_logs(Pushing_date[0], Pushing_date[1], Pushing_date[2])
                 write_last_push_date(START_DATE, END_DATE)
             error_message.config(text=f"Done✅", bootstyle="success")
+            delete_last_push_date()
             Reg_update_button.config(state="enabled")
             auto_push.config(state="enabled")
+            continue_push.config(state="disabled")
             time.sleep(10)
             error_message.config(text=f"", bootstyle="success")
         except Exception as e:
@@ -132,8 +152,98 @@ def run_program():
             time.sleep(10)
             error_message.config(text=f"", bootstyle="danger")
 
+    def run_epin_auto():
+        # enviroment variables
+        load_dotenv()
+        E_PIN_PLATFORM_LINK = os.getenv("E_PIN_PLATFORM_LINK")
+        E_PIN_PLATFORM_EMAIL = os.getenv("E_PIN_PLATFORM_EMAIL")
+        E_PIN_DETAILS = [E_PIN_PLATFORM_LINK,E_PIN_PLATFORM_EMAIL]
+        global push_Sdate
+        global push_Edate
+        error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
+        Reg_update_button.config(state="disabled")
+        auto_push_epin.config(state="disabled")
+        try:
+            error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
+            # running push
+            Pushing_dates = run("", "",SHOW_WINDOW,E_PIN_DETAILS)
+            for Pushing_date in Pushing_dates:
+                error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
+                print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
+                write_logs_epin(Pushing_date[0], Pushing_date[1], Pushing_date[2])
+                push_Sdate = Pushing_date[3]
+                push_Edate = Pushing_date[4]
+                print(push_Sdate, push_Edate)
+                write_last_push_date_epin(push_Sdate, push_Edate)
+            error_message.config(text=f"Done✅", bootstyle="success")
+            delete_last_push_date_epin()
+            time.sleep(10)
+            error_message.config(text=f"", bootstyle="success")
+            continue_push.config(state="disabled")
+            return push_Sdate,push_Edate
+        except Exception as e:
+            # writing the last push date so for the continue function
+            write_last_push_date_epin(push_Sdate, push_Edate)
+            print(e)
+            #deleting the niid file
+            delete()
+            continue_push.config(state="enabled")
+            error_message.config(text=f"There was an error", bootstyle="danger")
+            Reg_update_button.config(state="enabled")
+            auto_push_epin.config(state="enabled")
+            time.sleep(10)
+            error_message.config(text=f"", bootstyle="danger")
+            return push_Sdate,push_Edate
+        finally:
+            Reg_update_button.config(state="enabled")
+            auto_push_epin.config(state="enabled")
+    def continue_run_program_auto_epin():
+        # enviroment variables
+        load_dotenv()
+        E_PIN_PLATFORM_LINK = os.getenv("E_PIN_PLATFORM_LINK")
+        E_PIN_PLATFORM_EMAIL = os.getenv("E_PIN_PLATFORM_EMAIL")
+        E_PIN_DETAILS = [E_PIN_PLATFORM_LINK, E_PIN_PLATFORM_EMAIL]
+
+        START_DATE,END_DATE = get_last_push_dates_epin()
+        print(f"push dates {START_DATE},{END_DATE}")
+        time.sleep(4)
+        error_message.config(text=f"Starting👩‍💻...", bootstyle="success")
+        Reg_update_button.config(state="disabled")
+        auto_push_epin.config(state="disabled")
+        continue_push_epin.config(state="disabled")
+        try:
+            error_message.config(text=f"Pushing👩‍💻...", bootstyle="success")
+            # Continuing push form last date
+            Pushing_dates = run(START_DATE, END_DATE,SHOW_WINDOW,E_PIN_DETAILS)
+            for Pushing_date in Pushing_dates:
+                error_message.config(text=f"Pushed {Pushing_date[0]} to {Pushing_date[1]}", bootstyle="success")
+                print(f"pushed {Pushing_date[0]} to {Pushing_date[1]}")
+                write_logs_epin(Pushing_date[0], Pushing_date[1], Pushing_date[2])
+                write_last_push_date_epin(START_DATE, END_DATE)
+            error_message.config(text=f"Done✅", bootstyle="success")
+            delete_last_push_date_epin()
+            Reg_update_button.config(state="enabled")
+            auto_push_epin.config(state="enabled")
+            time.sleep(10)
+            error_message.config(text=f"", bootstyle="success")
+        except Exception as e:
+            write_last_push_date_epin(START_DATE, END_DATE)
+            delete()
+            error_message.config(text=f"There was an error", bootstyle="danger")
+            print(e)
+            continue_push_epin.config(state="enabled")
+            Reg_update_button.config(state="enabled")
+            auto_push_epin.config(state="enabled")
+            time.sleep(10)
+            error_message.config(text=f"", bootstyle="danger")
+
     #Manual update function
     def update():
+        # enviroment variables
+        load_dotenv()
+        THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
+        THIRD_PARTY_PLATFORM_EMAIL = os.getenv("3RD_PARTY_PLATFORM_EMAIL")
+        THIRD_PARTY_DETAILS = [THIRD_PARTY_PLATFORM_LINK, THIRD_PARTY_PLATFORM_EMAIL]
         # my_progress.start()
         error_message.config(text="Working on it👩‍💻", bootstyle="success")
         Reg_update_button.config(state="disabled")
@@ -161,7 +271,7 @@ def run_program():
         #Getting the file from A&G
             try:
                 error_message.config(text="Geting the file👩‍💻", bootstyle="success")
-                get_niid_spool(formated_start_date, formated_end_date,SHOW_WINDOW)
+                get_niid_spool(formated_start_date, formated_end_date,SHOW_WINDOW,THIRD_PARTY_DETAILS)
                 error_message.config(text="Edditing Sheet‍💻", bootstyle="success")
                 change_sheet_name()
             except Exception as e:
@@ -198,12 +308,84 @@ def run_program():
             delete()
             Reg_update_button.config(state="enabled")
 
+    def update_epin():
+        # enviroment variables
+        load_dotenv()
+        E_PIN_PLATFORM_LINK = os.getenv("E_PIN_PLATFORM_LINK")
+        E_PIN_PLATFORM_EMAIL = os.getenv("E_PIN_PLATFORM_EMAIL")
+        E_PIN_DETAILS = [E_PIN_PLATFORM_LINK, E_PIN_PLATFORM_EMAIL]
+        # my_progress.start()
+        error_message.config(text="Working on it👩‍💻", bootstyle="success")
+        Reg_update_button.config(state="disabled")
+        downloads_path = Path.home() / "Downloads"
+        file_path = f"{downloads_path}/NIID Spool.xlsx"
 
+        # Getting the date from the input
+        input_start_date = start_date.entry.get()
+        input_end_date = end_date.entry.get()
+
+        # replacing the "/" string with "-"
+        edited_start_date = input_start_date.replace("/", "-")
+        edited_end_date = input_end_date.replace("/", "-")
+
+        # Getting error message if the date format is wrong
+        ErrorMessage = comparing_date(edited_start_date, edited_end_date)
+        if ErrorMessage == "From Date cannot be greater than To Date.":
+            error_message.config(text=ErrorMessage, bootstyle="danger")
+            time.sleep(3)
+            error_message.config(text="")
+        else:
+            # Getting the formated date
+            formated_start_date = format_date(edited_start_date)
+            formated_end_date = format_date(edited_end_date)
+            # Getting the file from A&G
+            try:
+                error_message.config(text="Geting the file👩‍💻", bootstyle="success")
+                get_niid_spool(formated_start_date, formated_end_date, SHOW_WINDOW, E_PIN_DETAILS)
+                error_message.config(text="Edditing Sheet‍💻", bootstyle="success")
+                change_sheet_name()
+            except Exception as e:
+                if e:
+                    print(e)
+                    error_message.config(text="There was an error", bootstyle="danger")
+                    Reg_update_button.config(state="enabled")
+                    delete()
+                    time.sleep(3)
+                    error_message.config(text="", )
+                    return
+
+            print("gotten Data")
+            try:
+                error_message.config(text="Pushing to NIID👩‍💻", bootstyle="success")
+                errmessage = Push_to_Niid(SHOW_WINDOW)
+                openNewWindow(root, errmessage)
+            except Exception as e:
+                if e:
+                    print(e)
+                    error_message.config(text="There was an error", bootstyle="danger")
+                    Reg_update_button.config(state="enabled")
+                    delete()
+                    time.sleep(3)
+                    error_message.config(text="", )
+                    return
+
+            error_message.config(text="Done✅", bootstyle="success")
+            time.sleep(3)
+            error_message.config(text="")
+            print("Done")
+            # deleting file when done
+            delete()
+            Reg_update_button.config(state="enabled")
 
     # Push Manally run in background thread
     def run_function_in_background():
         # Create a thread to run the long_running_function
         thread = threading.Thread(target=update)
+        thread.start()
+
+    def run_function_in_background_update_epin():
+        # Create a thread to run the long_running_function
+        thread = threading.Thread(target=update_epin)
         thread.start()
 
     # Push Automatically run in background thread
@@ -212,10 +394,22 @@ def run_program():
         thread = threading.Thread(target=run_auto_update)
         thread.start()
 
+    def run_epin_program_auto():
+        # Create a thread to run the long_running_function
+        thread = threading.Thread(target=run_epin_auto)
+        thread.start()
+
+
     # Continuing Push Automatically run in background thread
     def continue_run_program_auto_background():
         # Create a thread to run the long_running_function
         thread = threading.Thread(target=continue_run_program_auto)
+        thread.start()
+
+
+    def continue_run_program_auto_epin_background():
+        # Create a thread to run the long_running_function
+        thread = threading.Thread(target=continue_run_program_auto_epin)
         thread.start()
 
     #User Interface GUI
@@ -223,9 +417,6 @@ def run_program():
     my_frame.pack(fill="both", expand=True, pady=70, padx=100)
     root.rowconfigure(4, weight=1)
 
-    #################### E_in changes
-    my_label = tb.Label(my_frame, text="E-PIN", bootstyle="default", font=("Inter", 18))
-    my_label.pack(pady=(2, 5), padx=(2, 2))
 
     my_label = tb.Label(my_frame, text="Push Manually", bootstyle="default", font=("Inter", 18))
     my_label.pack(pady=(20, 1), padx=(20, 20))
@@ -238,6 +429,10 @@ def run_program():
 
     Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Push", width=30,
                                   command=run_function_in_background)
+    Reg_update_button.pack(padx=0, pady=10, )
+
+    Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Push (E-PIN)", width=30,
+                                  command=run_function_in_background_update_epin)
     Reg_update_button.pack(padx=0, pady=10, )
 
     my_label = tb.Label(my_frame, text="Push Policy Automatically ", bootstyle="default", font=("Inter", 18))
@@ -253,9 +448,29 @@ def run_program():
     auto_push = tb.Button(my_frame, bootstyle="danger", text="Push Automatically", width=30, command=run_program_auto)
     auto_push.pack(padx=(0, 0), pady=10, )
 
-    continue_push = tb.Button(my_frame, bootstyle="danger", text="Continue Push?", width=25, state="disabled",
-                              command=continue_run_program_auto_background)
-    continue_push.pack(padx=(0, 0), pady=10, )
+    auto_push_epin = tb.Button(my_frame, bootstyle="danger", text="Push Automatically (E-PIN)", width=30, command=run_epin_program_auto)
+    auto_push_epin.pack(padx=(0, 0), pady=10, )
+
+    if check_last_push_file() == True:
+        continue_push = tb.Button(my_frame, bootstyle="danger", text="Continue Push?", width=25, state="enabled",
+                                  command=continue_run_program_auto_background)
+        continue_push.pack(padx=(0, 0), pady=10, )
+    else:
+        continue_push = tb.Button(my_frame, bootstyle="danger", text="Continue Push?", width=25, state="disabled",
+                                  command=continue_run_program_auto_background)
+        continue_push.pack(padx=(0, 0), pady=10, )
+
+    if check_last_push_file_epin() == True:
+        continue_push_epin = tb.Button(my_frame, bootstyle="danger", text="Continue Push(E-PIN)?", width=25,
+                                  state="enabled",
+                                  command=continue_run_program_auto_epin_background)
+        continue_push_epin.pack(padx=(0, 0), pady=10, )
+    else:
+        continue_push_epin = tb.Button(my_frame, bootstyle="danger", text="Continue Push(E-PIN)?", width=25,
+                                  state="disabled",
+                                  command=continue_run_program_auto_epin_background)
+        continue_push_epin.pack(padx=(0, 0), pady=10, )
+
 
     my_label = tb.Label(my_frame, text="Show Chrome Window", bootstyle=Theme[2], font=("Helvetica", 12))
     my_label.pack(pady=10, padx=(20, 20))

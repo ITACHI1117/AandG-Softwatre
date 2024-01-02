@@ -1,10 +1,10 @@
 
-def get_last_push_dates():
+def get_last_push_dates_epin():
     start_date = ""
     end_date = ""
     # Open a file in read mode ('r')
-    file_path1 = './LOGS/Last_push_date/last_push_Sdate.txt'  # Replace with the path to your file
-    file_path2 = './LOGS/Last_push_date/last_push_Edate.txt'
+    file_path1 = './LOGS/E_PIN_Last_push_date/last_push_Sdate.txt'  # Replace with the path to your file
+    file_path2 = './LOGS/E_PIN_Last_push_date/last_push_Edate.txt'
     try:
         with open(file_path1, 'r') as file:
             start_date = file.read()

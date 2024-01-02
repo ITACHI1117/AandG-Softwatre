@@ -12,7 +12,7 @@ from Change_Sheet_Name import change_sheet_name
 # Main Function
 
 
-def get_niid_spool(start_date,end_date,SHOW_WINDOW):
+def get_niid_spool(start_date,end_date,SHOW_WINDOW,LINK):
     #enviroment variables
     load_dotenv()
     THIRD_PARTY_PLATFORM_LINK = os.getenv("3RD_PARTY_PLATFORM_LINK")
@@ -26,7 +26,7 @@ def get_niid_spool(start_date,end_date,SHOW_WINDOW):
     file_path = os.path.join(directory_path, file_name)
 
     # Provide the email and password
-    email = THIRD_PARTY_PLATFORM_EMAIL
+    email = LINK[1]
     password = THIRD_PARTY_PLATFORM_PASSWORD
 
     #wait time
@@ -53,7 +53,7 @@ def get_niid_spool(start_date,end_date,SHOW_WINDOW):
     # driver.minimize_window()
 
     # Send a get request to the url
-    driver.get(THIRD_PARTY_PLATFORM_LINK)
+    driver.get(LINK[0])
     time.sleep(0.2)
     # https: // auth.geeksforgeeks.org /
 
