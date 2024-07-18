@@ -1,13 +1,8 @@
-from selenium import webdriver
 import zipfile
 import wget
 import subprocess
 import os
-from pathlib import Path
-from selenium import webdriver
 import time
-from selenium.webdriver.chrome.service import Service
-
 
 
 # CHROMEDRIVER_PATH =  r""
