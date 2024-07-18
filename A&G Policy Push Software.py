@@ -1,6 +1,8 @@
 import time
 from tkinter import *
 from tkinter import messagebox
+from datetime import datetime
+
 
 
 import ttkbootstrap as tb
@@ -37,7 +39,10 @@ root = tb.Window(themename=Theme[0])
 
 root.title("A&G Policy Push Software")
 root.iconbitmap("./A&GICON.ico")
-root.geometry('1000x800')
+root.state('zoomed')
+
+# root.attributes('-fullscreen', True)
+# root.geometry('1000x800')
 
 # Done = ""
 push_Sdate = ""
@@ -254,24 +259,23 @@ def run_program():
         input_start_date = start_date.entry.get()
         input_end_date = end_date.entry.get()
 
-        # replacing the "/" string with "-"
-        edited_start_date = input_start_date.replace("/", "-")
-        edited_end_date = input_end_date.replace("/", "-")
-
         # Getting error message if the date format is wrong
-        ErrorMessage = comparing_date(edited_start_date, edited_end_date)
-        if ErrorMessage == "From Date cannot be greater than To Date.":
+        ErrorMessage = "Enter a valid Date"
+        if (input_end_date < input_start_date):
             error_message.config(text=ErrorMessage, bootstyle="danger")
+            Reg_update_button.config(state="enabled")
             time.sleep(3)
             error_message.config(text="")
         else:
+            Reg_update_button.config(state="disabled")
             # Getting the formated date
-            formated_start_date = format_date(edited_start_date)
-            formated_end_date = format_date(edited_end_date)
+            # formated_start_date = format_date(edited_start_date)
+            # formated_end_date = format_date(edited_end_date)
         #Getting the file from A&G
             try:
+                Reg_update_button.config(state="disabled")
                 error_message.config(text="Geting the file👩‍💻", bootstyle="success")
-                get_niid_spool(formated_start_date, formated_end_date,SHOW_WINDOW,THIRD_PARTY_DETAILS)
+                get_niid_spool(input_start_date, input_end_date,SHOW_WINDOW,THIRD_PARTY_DETAILS)
                 error_message.config(text="Edditing Sheet‍💻", bootstyle="success")
                 change_sheet_name()
             except Exception as e:
@@ -316,7 +320,7 @@ def run_program():
         E_PIN_DETAILS = [E_PIN_PLATFORM_LINK, E_PIN_PLATFORM_EMAIL]
         # my_progress.start()
         error_message.config(text="Working on it👩‍💻", bootstyle="success")
-        Reg_update_button.config(state="disabled")
+        Reg_update_button2.config(state="disabled")
         downloads_path = Path.home() / "Downloads"
         file_path = f"{downloads_path}/NIID Spool.xlsx"
 
@@ -324,31 +328,31 @@ def run_program():
         input_start_date = start_date.entry.get()
         input_end_date = end_date.entry.get()
 
-        # replacing the "/" string with "-"
-        edited_start_date = input_start_date.replace("/", "-")
-        edited_end_date = input_end_date.replace("/", "-")
 
         # Getting error message if the date format is wrong
-        ErrorMessage = comparing_date(edited_start_date, edited_end_date)
-        if ErrorMessage == "From Date cannot be greater than To Date.":
+        ErrorMessage = "Enter a valid Date"
+        if (input_end_date < input_start_date):
             error_message.config(text=ErrorMessage, bootstyle="danger")
+            Reg_update_button2.config(state="enabled")
             time.sleep(3)
             error_message.config(text="")
         else:
-            # Getting the formated date
-            formated_start_date = format_date(edited_start_date)
-            formated_end_date = format_date(edited_end_date)
+            # Reg_update_button.config(state="enabled")
+            # # Getting the formated date
+            # formated_start_date = format_date(input_start_date)
+            # formated_end_date = format_date(input_end_date)
             # Getting the file from A&G
             try:
+                Reg_update_button2.config(state="disabled")
                 error_message.config(text="Geting the file👩‍💻", bootstyle="success")
-                get_niid_spool(formated_start_date, formated_end_date, SHOW_WINDOW, E_PIN_DETAILS)
+                get_niid_spool(input_start_date, input_end_date, SHOW_WINDOW, E_PIN_DETAILS)
                 error_message.config(text="Edditing Sheet‍💻", bootstyle="success")
                 change_sheet_name()
             except Exception as e:
                 if e:
                     print(e)
                     error_message.config(text="There was an error", bootstyle="danger")
-                    Reg_update_button.config(state="enabled")
+                    Reg_update_button2.config(state="enabled")
                     delete()
                     time.sleep(3)
                     error_message.config(text="", )
@@ -363,7 +367,7 @@ def run_program():
                 if e:
                     print(e)
                     error_message.config(text="There was an error", bootstyle="danger")
-                    Reg_update_button.config(state="enabled")
+                    Reg_update_button2.config(state="enabled")
                     delete()
                     time.sleep(3)
                     error_message.config(text="", )
@@ -375,7 +379,7 @@ def run_program():
             print("Done")
             # deleting file when done
             delete()
-            Reg_update_button.config(state="enabled")
+            Reg_update_button2.config(state="enabled")
 
     # Push Manally run in background thread
     def run_function_in_background():
@@ -421,19 +425,19 @@ def run_program():
     my_label = tb.Label(my_frame, text="Push Manually", bootstyle="default", font=("Inter", 18))
     my_label.pack(pady=(20, 1), padx=(20, 20))
 
-    start_date = tb.DateEntry(my_frame, bootstyle="dark", )
+    start_date = tb.DateEntry(my_frame, bootstyle="dark",dateformat=('%d-%b-%y'))
     start_date.pack(pady=5)
 
-    end_date = tb.DateEntry(my_frame, bootstyle="dark", )
+    end_date = tb.DateEntry(my_frame, bootstyle="dark", dateformat=('%d-%b-%y'))
     end_date.pack(pady=5)
 
     Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Push", width=30,
                                   command=run_function_in_background)
     Reg_update_button.pack(padx=0, pady=10, )
 
-    Reg_update_button = tb.Button(my_frame, bootstyle="danger", text="Push (E-PIN)", width=30,
+    Reg_update_button2 = tb.Button(my_frame, bootstyle="danger", text="Push (E-PIN)", width=30,
                                   command=run_function_in_background_update_epin)
-    Reg_update_button.pack(padx=0, pady=10, )
+    Reg_update_button2.pack(padx=0, pady=10, )
 
     my_label = tb.Label(my_frame, text="Push Policy Automatically ", bootstyle="default", font=("Inter", 18))
     my_label.pack(pady=(20, 1), padx=(20, 20))

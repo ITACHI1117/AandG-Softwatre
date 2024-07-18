@@ -39,4 +39,3 @@ def format_date(Date):
 
     return string_list
 
-
