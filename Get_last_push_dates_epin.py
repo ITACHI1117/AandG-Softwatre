@@ -1,4 +1,3 @@
-
 def get_last_push_dates_epin():
     start_date = ""
     end_date = ""

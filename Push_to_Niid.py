@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-from selenium.webdriver.common.by import By
-
 
 def Push_to_Niid(SHOW_WINDOW):
     load_dotenv()

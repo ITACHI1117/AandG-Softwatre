@@ -1,9 +1,5 @@
 import time
-from tkinter import *
 from tkinter import messagebox
-from datetime import datetime
-
-
 
 import ttkbootstrap as tb
 import customtkinter
@@ -21,8 +17,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from Format_date import format_date
-from Comparing_Date import comparing_date
 from Write_logs import write_logs
 from Write_logs_epin import write_logs_epin
 from push_date import run
@@ -41,8 +35,6 @@ root.title("A&G Policy Push Software")
 root.iconbitmap("./A&GICON.ico")
 root.state('zoomed')
 
-# root.attributes('-fullscreen', True)
-# root.geometry('1000x800')
 
 # Done = ""
 push_Sdate = ""

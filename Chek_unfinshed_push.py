@@ -1,5 +1,4 @@
 import os
-import time
 
 file_name = "Last_push_date"
 folder_path = r"./LOGS/Last_push_date"

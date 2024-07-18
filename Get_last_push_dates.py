@@ -1,4 +1,3 @@
-
 def get_last_push_dates():
     start_date = ""
     end_date = ""

@@ -1,4 +1,3 @@
-
 # Formatting the date for A and G Platform
 def format_date(Date):
     string = Date

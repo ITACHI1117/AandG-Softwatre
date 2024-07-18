@@ -1,4 +1,3 @@
-
 def comparing_date(startDate,endDate):
     # startDate = "01-03-2023"
     # endDate = "01-02-2023"
