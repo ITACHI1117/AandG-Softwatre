@@ -3,12 +3,22 @@ import time
 
 from pathlib import Path
 
+from Change_Sheet_Name import change_sheet_name
+from Delete_file_when_done import delete
+from Get_Niid_Spool import get_niid_spool
+from Push_to_Niid import Push_to_Niid
+from write_last_date import write_last_push_date
+
 # Get the current date
 current_date = datetime.date.today()
 date_to_string = [str(current_date).split("-")]
 
 current_Year = int(date_to_string[0][0])
+# Setting current month to june beacuse of the update made at A&G
+# Policy push will start from June 2024
+# This will be changed later on
 current_Month = int(date_to_string[0][1])
+# current_Month = 7 # June
 current_Day = int(date_to_string[0][2])
 
 month = 0
@@ -19,50 +29,48 @@ start = 1
 end = 5
 
 
-def run(push_start_date, push_end_month, SHOW_WINDOW, LINK):
+def run(push_start_date, push_end_date, SHOW_WINDOW, LINK):
+    print(push_start_date)
+    print(current_Month)
     Month30 = [4, 6, 9, 11]
 
     # Checking if the user wants to continue push and values were passes in to the run function
-    if push_start_date == "" and push_end_month == "":
+    if push_start_date == "" and push_end_date == "":
+        Start_Date = [1, current_Month, current_Year]
+        End_Date = [5, current_Month, current_Year]
+
         if current_Month == 12:
-            Start_Date = [1, 1, current_Year]
-            End_Date = [5, 1, current_Year]
+            Start_Date = [1, 1, current_Year + 1]
+            End_Date = [5, 1, current_Year + 1]
         else:
             if current_Day <= 5:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [5, current_Month, current_Year - 1]
+                Start_Date = [1, 6, current_Year]
+                End_Date = [5, 6, current_Year]
             elif 6 <= current_Day <= 10:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [10, current_Month, current_Year - 1]
+                Start_Date = [6, 6, current_Year]
+                End_Date = [10, 6, current_Year]
             elif 11 <= current_Day <= 15:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [15, current_Month, current_Year - 1]
+                Start_Date = [11, 6, current_Year]
+                End_Date = [15, 6, current_Year]
             elif 16 <= current_Day <= 20:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [20, current_Month, current_Year - 1]
+                Start_Date = [16, 6, current_Year]
+                End_Date = [20, 6, current_Year]
             elif 21 <= current_Day <= 25:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [25, current_Month, current_Year - 1]
-            elif 26 <= current_Day <= 31 and int(current_Year - 1) % 4 != 0 and current_Month == 2:
-                Start_Date = [current_Day, 2, current_Year - 1]
-                End_Date = [28, 2, current_Year - 1]
-            elif 26 <= current_Day <= 31 and int(current_Year - 1) % 4 == 0 and current_Month == 2:
-                Start_Date = [current_Day, 2, current_Year - 1]
-                End_Date = [29, 2, current_Year - 1]
-            elif 26 <= current_Day <= 31:
-                Start_Date = [current_Day, current_Month, current_Year - 1]
-                End_Date = [31, current_Month, current_Year - 1]
-            if 26 <= current_Day <= 31:
-                for i in Month30:
-                    if current_Month == i:
-                        Start_Date = [current_Day, current_Month, current_Year - 1]
-                        End_Date = [30, current_Month, current_Year - 1]
-
-        # Start_Date = [1, current_Month+1, current_Year-1]
-        # End_Date = [5, current_Month+1, current_Year-1]
+                Start_Date = [21, 6, current_Year]
+                End_Date = [25, 6, current_Year]
+            elif current_Day >= 26:
+                if current_Month == 2:
+                    if int(current_Year) % 4 == 0:
+                        End_Date = [29, 2, current_Year]
+                    else:
+                        End_Date = [28, 2, current_Year]
+                elif current_Month in Month30:
+                    End_Date = [30, current_Month, current_Year]
+                else:
+                    End_Date = [31, current_Month, current_Year]
     else:
         Start_Date = push_start_date
-        End_Date = push_end_month
+        End_Date = push_end_date
         # print(Start_Date[1])
         # print(End_Date)
 
@@ -172,6 +180,7 @@ def run(push_start_date, push_end_month, SHOW_WINDOW, LINK):
 
 # This function formats the date and runs the push functions
 def date_formater(S_date, E_date, SHOW_WINDOW, LINK):
+    global errmessage
     downloads_path = Path.home() / "Downloads"
     file_path = f"{downloads_path}/NIID Spool.xlsx"
 
@@ -213,30 +222,43 @@ def date_formater(S_date, E_date, SHOW_WINDOW, LINK):
 
     time.sleep(0.4)
 
-    #running the functions
-    # try:
-    #     get_niid_spool(Formted_Sdate,Formted_Edate,SHOW_WINDOW,LINK)
-    #     change_sheet_name()
-    # except Exception as e:
-    #     delete()
-    #     print(e)
-    #     time.sleep(3)
-    #     return
+    # running the functions
+    try:
+        # Deleting the NIIID File If it exists
+        delete()
+        errmessage = get_niid_spool(Formted_Sdate,Formted_Edate,SHOW_WINDOW,LINK)
+        print(f"Error message from the function {errmessage}")
+        if errmessage:
+            print(errmessage)
+            yield [Formted_Sdate, Formted_Edate, errmessage, S_date, E_date]
+        else:
+            print("Executing next task")
+            print(errmessage)
+            print("changing sheet name")
+            change_sheet_name()
+            print("gotten Data")
+            errmessage = Push_to_Niid(SHOW_WINDOW)
+            yield [Formted_Sdate, Formted_Edate, errmessage, S_date, E_date]
+            write_last_push_date(S_date, E_date)
+            delete()
+    except Exception as e:
+        delete()
+        write_last_push_date(S_date, E_date)
+        print(f" this is  the error {e}")
+        time.sleep(3)
+        # return errmessage
+
     #
-    # print("gotten Data")
     # try:
     #     errmessage = Push_to_Niid(SHOW_WINDOW)
     # except Exception as e:
     #     delete()
     #     print(e)
     #     time.sleep(3)
-    #     return errmessage
-    #
+    #     return errmessage,
+
     # delete()
-
-    errmessage = "hi"
-
-    yield [Formted_Sdate, Formted_Edate, errmessage, S_date, E_date]
+    # errmessage = "hi"
 
 
     # Reformating the date so the run function can undersand the date format

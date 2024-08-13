@@ -20,6 +20,7 @@ def delete():
         os.remove(file_path)
         print(f"File '{file_path}' has been deleted.")
     except FileNotFoundError:
+        print("From Delete file when done file")
         print(f"File '{file_path}' not found.")
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -35,8 +35,8 @@ def write_logs_epin(PUSH_START_DATE,PUSH_END_DATE,PUSH_MESSAGE):
 
     #Writing files
     with open(log_file_path, "w") as logs:
-        logs.write(f"Policy Details{PUSH_INFO[0]}\n")
-        logs.write(f"Policy Details{PUSH_INFO[1]}\n")
+        logs.write(f"Policy Details {PUSH_INFO[0]}\n")
+        logs.write(f"Policy Details \n{PUSH_INFO[1]}\n")
         logs.write(f"Date Modified {current_datetime}\n\n\n")
 
 

@@ -21,7 +21,7 @@ def Push_to_Niid(SHOW_WINDOW):
 
 
     options = webdriver.ChromeOptions()
-    options.add_argument(SHOW_WINDOW)
+    # options.add_argument('--headless')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.add_argument("--start-minimized")
     options.add_argument('--log-level=0')

@@ -12,7 +12,7 @@ def get_last_push_dates():
             for letter in letters_to_remove:
                 original_string = original_string.replace(letter, "")
             start_date_list = original_string.split()
-            START_DATE = [int(start_date_list[0]),int(start_date_list[1]),int(start_date_list[2])]
+            START_DATE = [int(start_date_list[0]), (start_date_list[1]), int(start_date_list[2])]
             print(START_DATE)
         with open(file_path2, 'r') as file:
             end_date = file.read()
@@ -21,11 +21,16 @@ def get_last_push_dates():
             for letter2 in letters_to_remove2:
                 original_string2 = original_string2.replace(letter2, "")
             end_date_list = original_string2.split()
-            END_DATE = [int(end_date_list[0]), int(end_date_list[1]), int(end_date_list[2])]
+            END_DATE = [int(end_date_list[0]), (end_date_list[1]), int(end_date_list[2])]
             print(END_DATE)
     except FileNotFoundError:
         print(f"The file '{file_path1} or {file_path2}' does not exist.")
     except Exception as e:
         print(f"An error occurred: {e}")
-    return START_DATE,END_DATE
 
+    return START_DATE, END_DATE
+
+
+# get_last_push_dates()
+
+# print(START_DATE, END_DATE)

@@ -1,0 +1,33 @@
+Policy Details Pushed from 6-Jul-2024 - 10-Jul-2024 
+
+Policy Details 
+Message Details
+Notification: S/N 50 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 52 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 470 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 574 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at NICON INS. PLC.
+Notification: S/N 581 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at STACO INSURANCE PLC.
+Notification: S/N 667 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 676 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 691 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at A&G
+Notification: S/N 808 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 857 Maximum number of Policies exist; Maximum number of Policies exist
+Notification: S/N 872 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 907 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1035 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at STACO INSURANCE PLC.
+Notification: S/N 1177 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1293 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1349 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1363 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1383 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at NICON INS. PLC.
+Notification: S/N 1420 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1475 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at STACO INSURANCE PLC.
+Notification: S/N 1506 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at INTERNATIONAL ENERGY INS.
+Notification: S/N 1511 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at STACO INSURANCE PLC.
+Notification: S/N 1570 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at NICON INS. PLC.
+Notification: S/N 1794 Policy already exists with Third Party Cover; Policy already exists with Third Party Cover at Sanlam Nigeria
+
+1 record(s) successfully uploaded and 1791 record(s) failed. 1 credit units = NGN 80 was used, You have 17754 units left.
+Date Modified 2024-08-13 12:29:45.382094
+
+
