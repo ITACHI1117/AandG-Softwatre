@@ -26,6 +26,7 @@ def Check_and_install_Updated_driver():
 
         # Display the content that was read from the file
         print(file_content)
+        # os.remove(file_location)
         return file_content
 
     def download_latest_version(version_number):
@@ -33,7 +34,13 @@ def Check_and_install_Updated_driver():
         download_url = f"https://storage.googleapis.com/chrome-for-testing-public/{version_number}/win64/chromedriver-win64.zip"
         # "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/119.0.6045.105/win64/chromedriver-win64.zip"
         # download zip file
-        latest_driver_zip = wget.download(download_url, out=CHROMEDRIVER_FOLDER)
+        try:
+            latest_driver_zip = wget.download(download_url, out=CHROMEDRIVER_FOLDER)
+        except Exception as err:
+            os.remove(file_location)
+
+        # Removing the old chrome driver after installation
+        os.remove(r"chromedriver.exe")
         # read & extract the zip file
         try:
             with zipfile.ZipFile(latest_driver_zip, 'r') as downloaded_zip:
@@ -56,13 +63,14 @@ def Check_and_install_Updated_driver():
         print(f"Local driver version: {local_driver_version}")
         # check for latest chromedriver version online
         response = get_latest_driver()
+
         online_driver_version = response
         print(f"Latest online chromedriver version: {online_driver_version}")
 
         if local_driver_version == online_driver_version:
             return True
         else:
-            os.remove(r"chromedriver.exe")
+            # os.remove(r"chromedriver.exe")
             download_latest_version(online_driver_version)
 
 
@@ -74,4 +82,5 @@ def Check_and_install_Updated_driver():
         os.remove(file_location)
     else:
         Status = "Error Downlaoding Driver"
+        os.remove(file_location)
     return Status
